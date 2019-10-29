@@ -1,0 +1,63 @@
+第一：css的四种引入方式
+
+1.行内样式
+
+最直接最简单的一种，直接对HTML标签使用style=""，例如：
+
+<p style="color:#F00; "></p>
+
+缺点：HTML页面不纯净，文件体积大，不利于蜘蛛爬行，后期维护不方便。
+
+
+
+2.内嵌样式
+
+内嵌样式就是将CSS代码写在<head></head>之间，并且用<style></style>进行声明，例如：
+
+
+
+<style type="text/css">
+
+body,div,a,img,p{margin:0; padding:0;}
+
+</style>
+
+优缺点：页面使用公共CSS代码，也是每个页面都要定义的，如果一个网站有很多页面，每个文件都会变大，后期维护难度也大，如果文件很少，CSS代码也不多，这种样式还是很不错的。
+
+
+
+
+
+3.链接样式
+
+链接样式是使用频率最高，最实用的样式，只需要在<head></head>之间加上<link…/>就可以了，如下：
+
+<link type="text/css" rel="stylesheet" href="style.css" />
+
+优缺点：实现了页面框架代码与表现CSS代码的完全分离，使得前期制作和后期维护都十分方便
+
+
+
+4.导入样式（不建议使用）
+
+导入样式和链接样式比较相似，采用@import样式导入CSS样式表，在HTML初始化时，会被导入到HTML或者CSS文件中，成为文件的一部分，类似第二种内嵌样式。
+
+@import在html中使用，如下：
+
+<style type="text/css">
+@import url(style.css);
+</style>
+
+
+
+@import在CSS中使用，如下：
+
+@import url(style.css);
+
+第二：四种CSS引入方式的优先级
+
+1.就近原则
+
+2.理论上：行内>内嵌>链接>导入
+
+3.实际上：内嵌、链接、导入在同一个文件头部，谁离相应的代码近，谁的优先级高
