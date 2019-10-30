@@ -21,6 +21,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/login',require("./routes/log&reg.js"));
+app.post('/album',function(req,res){
+  if(req.body["loginname"]=="123"){
+    res.send({msg:"登录成功"})
+  }
+  else{
+    res.send({msg:"错误登录信息"})
+  }
+  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
