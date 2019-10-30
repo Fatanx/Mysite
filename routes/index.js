@@ -19,7 +19,6 @@ async function saveUser(username,userpassword,useremail){
     userpassword:userpassword,
     usermail:useremail
   });
-  await user.save();
 }
 
 
