@@ -74,13 +74,12 @@
         var loginname = $("input.loginusername").eq(0).val();
         var loginpassword = $("input.loginuserpassword").eq(0).val();
         console.log(loginname);
-        $.post("/album",{loginname:loginname,loginpassword:loginpassword},function(res){
+        $.post("/checkuser",{loginname:loginname,loginpassword:loginpassword},function(res){
         if(res.msg == "登录成功"){
             document.location="./album.html";
         }
         else{alert(res.msg)};
         });
-
       }
     </script>
   </body>
