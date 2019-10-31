@@ -11,11 +11,7 @@ var userSchema = new mongoose.Schema({
 });
 const User = mongoose.model("User",userSchema);
 
-
-async function remove_all(){
-  await User.remove();
-}
-remove_all();
+User.remove();
 
 const Admin = new User({
   username:"admin",
@@ -30,4 +26,9 @@ const tuter = new User({
   usermail:"test@mail.com"
 });
 tuter.save();
-exit();
+
+// async function search(){
+//   var user1 = await User.findOne({loginname:"admin"});
+//   console.log(user1);
+// }
+// search();
