@@ -27,12 +27,15 @@ async function readUser(usern,userp,res){
   if(user != null){
       if(user["userpassword"] == userp){
         res.send({msg:"登录成功"});
+        console.log(usern + "登录成功");
       }
       else{
         res.send({msg:"错误登录名或密码"});
+        console.log(usern + "错误登录名或密码");
       }
     }
   res.send({msg:"错误登录名或密码"});
+  console.log(usern + "错误登录名或密码");
 }
 
 /* GET home page. */

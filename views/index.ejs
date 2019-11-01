@@ -42,14 +42,14 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">请输入密码:</span>
         </div>
-        <input type="text" class="form-control regpassword" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+        <input type="password" class="form-control regpassword" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
       </div>
 
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">请输入邮箱:</span>
         </div>
-        <input type="text" class="form-control email-input" placeholder="Email" aria-label="Password" aria-describedby="basic-addon1">
+        <input type="text" class="form-control regmail" placeholder="Email" aria-label="Password" aria-describedby="basic-addon1">
       </div>
 
       <div class="input-group mb-3">
@@ -86,8 +86,8 @@
       }
 
       function go_login(event){
-        var loginname = $("input.loginname").eq(0).val();
-        var loginpassword = $("input.loginpassword").eq(0).val();
+        var loginname = $("input.loginusername").eq(0).val();
+        var loginpassword = $("input.loginuserpassword").eq(0).val();
         console.log(loginname);
         $.post("/checkuser",{loginname:loginname,loginpassword:loginpassword},function(res){
         if(res.msg == "登录成功"){
@@ -99,7 +99,7 @@
 
       var codekey = '';
       function send_key(event){
-        var mailadd = $(".email-input").eq(0).val()
+        var mailadd = $(".regmail").eq(0).val()
         $(".send_key").attr("disabled",true);
         $.post("send_key/send",{email:mailadd},function(res){
           console.log(res.msg);
@@ -117,12 +117,19 @@
       function go_logup(event){
         var regname = $(".regname").eq(0).val();
         var regpassword = $(".regpassword").eq(0).val();
-        console.log(regname,regpassword);
+        var regmail = $(".regmail").eq(0).val();
         var iskey = (codekey ==  $("input.input-key").eq(0).val());
+        $(".regname").eq(0).val("");
+        $(".regpassword").eq(0).val("");
+        $(".regmail").eq(0).val("");
         if(regname && regpassword ){
           if(iskey){
-            console.log("验证正确");
-            //验证正确
+          //验证正确
+            $.post("/login/reg",{regname:regname,regpassword:regpassword,regmail:regmail},res=>{
+              if(res="save completed"){
+                document.location="./album.html";
+              }
+            })
           }
           else{
             //key验证失败

@@ -1,5 +1,18 @@
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
+mongoose.Promise = Promise;
+
+
+var userSchema = new mongoose.Schema({
+  username:String,
+  userpassword:String,
+  usermail:String
+});
+mongoose.model("User1",userSchema);
+const User1 = mongoose.model("User");
+
 
 /* GET home page. */
 router.get('/check', function(req, res, next) {
@@ -11,5 +24,16 @@ router.get('/check', function(req, res, next) {
   }
 });
 
+router.post('/reg',function(req,res,next){
+  let user = new User1({
+    username:req.body["regname"],
+    userpassword:req.body["regpassword"],
+    usermail:req.body["regmail"],
+  });
+  user.save();
+  console.log("save completed");
+  res.send("save completed");
+});
 
+mongoose.uncon
 module.exports = router;
