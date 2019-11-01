@@ -35,5 +35,4 @@ router.post('/reg',function(req,res,next){
   res.send("save completed");
 });
 
-mongoose.uncon
 module.exports = router;
