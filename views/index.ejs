@@ -33,16 +33,16 @@
     <div class="regbox box">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1">请输入用户名:</span>
+          <span class="input-group-text " id="basic-addon1">请输入用户名:</span>
         </div>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        <input type="text" class="form-control regname" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
       </div>
 
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">请输入密码:</span>
         </div>
-        <input type="text" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+        <input type="text" class="form-control regpassword" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
       </div>
 
       <div class="input-group mb-3">
@@ -56,14 +56,14 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">请输入验证码:</span>
         </div>
-        <input type="text" class="form-control" placeholder="code" aria-label="code" aria-describedby="basic-addon1">
+        <input type="text" class="form-control input-key" placeholder="code" aria-label="code" aria-describedby="basic-addon1">
         <div class="input-group-prepend">
-          <span class="input-group-text send-key" id="basic-addon1" onclick="send_key()">发送验证码</span>
+          <span class="input-group-text send-key" id="basic-addon1" onclick="send_key()" style="cursor:default">发送验证码</span>
         </div>
       </div>
 
         <div class="button-group">
-          <button type="button" class="btn btn-light">注册</button>
+          <button type="button" class="btn btn-light" onclick="go_logup()">注册</button>
           <button type="button" class="btn btn-light" onclick="back_log()">返回</button>
         </div>
     </div>
@@ -79,13 +79,15 @@
         $(".loginbox").css("display","none");
         $(".regbox").css("display","block");
       }
+
       function back_log(event){
         $(".loginbox").css("display","block");
         $(".regbox").css("display","none");
       }
+
       function go_login(event){
-        var loginname = $("input.loginusername").eq(0).val();
-        var loginpassword = $("input.loginuserpassword").eq(0).val();
+        var loginname = $("input.loginname").eq(0).val();
+        var loginpassword = $("input.loginpassword").eq(0).val();
         console.log(loginname);
         $.post("/checkuser",{loginname:loginname,loginpassword:loginpassword},function(res){
         if(res.msg == "登录成功"){
@@ -95,12 +97,42 @@
         });
       }
 
+      var codekey = '';
       function send_key(event){
         var mailadd = $(".email-input").eq(0).val()
+        $(".send_key").attr("disabled",true);
         $.post("send_key/send",{email:mailadd},function(res){
-          console.log(res);
+          console.log(res.msg);
+          codekey = res.key;
         })
         //将来添加
+      }
+
+      function msgbox_alert(_msg){
+        $("div.msgbox").eq(0).text(_msg);
+        $("div.msgbox").eq(0).css("display","block");
+        $("div.msgbox").eq(0).fadeOut(3000);
+      }
+
+      function go_logup(event){
+        var regname = $(".regname").eq(0).val();
+        var regpassword = $(".regpassword").eq(0).val();
+        console.log(regname,regpassword);
+        var iskey = (codekey ==  $("input.input-key").eq(0).val());
+        if(regname && regpassword ){
+          if(iskey){
+            console.log("验证正确");
+            //验证正确
+          }
+          else{
+            //key验证失败
+            msgbox_alert("验证码不正确");
+          }
+        }
+        else{
+          //用户名密码验证失败
+          msgbox_alert("用户名密码不合要求");
+        }
       }
     </script>
   </body>
