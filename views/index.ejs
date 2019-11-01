@@ -126,7 +126,7 @@
           if(iskey){
           //验证正确
             $.post("/login/reg",{regname:regname,regpassword:regpassword,regmail:regmail},res=>{
-              if(res="save completed"){
+              if(res=="save completed"){
                 document.location="./album.html";
               }
             })
