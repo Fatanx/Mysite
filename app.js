@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.listen(80);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login',require("./routes/log&reg.js"));
