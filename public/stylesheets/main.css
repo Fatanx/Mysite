@@ -1,0 +1,51 @@
+*{
+  margin:0px ;
+  padding:0px;
+}
+
+body{
+  background: url("../images/bg-blue.jpg" );
+  width: auto;
+}
+
+
+div.content{
+  margin-top: 70px;
+  position: absolute;
+  margin-left: 10%;
+}
+
+.tab-content{
+  background: white;
+  min-height:700px;
+}
+
+.bg-choice{
+  top:150px;
+  background: white;
+  position: absolute;
+  width:15px;
+  height: 30px;
+  font-size: 10px;
+  border-radius: 0 5px 5px 0;
+  border: solid 1px black;
+}
+
+.bg-choice:hover{
+  background: white;
+  width:80px;
+  height: 100px;
+  position: absolute;
+  border-radius: 0 5px 5px 0;
+  border: solid 1px black;
+}
+
+.mini-tab{
+}
+
+.full-tab{
+  margin:0px;
+}
+.bg-cl-choice {
+  margin:0px;
+}
