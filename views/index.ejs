@@ -118,7 +118,8 @@
         var regname = $(".regname").eq(0).val();
         var regpassword = $(".regpassword").eq(0).val();
         var regmail = $(".regmail").eq(0).val();
-        var iskey = (codekey ==  $("input.input-key").eq(0).val());
+        var iskey = ($("input.input-key").eq(0).val()) &&(codekey ==  $("input.input-key").eq(0).val());
+
         $(".regname").eq(0).val("");
         $(".regpassword").eq(0).val("");
         $(".regmail").eq(0).val("");
@@ -126,7 +127,7 @@
           if(iskey){
           //验证正确
             $.post("/login/reg",{regname:regname,regpassword:regpassword,regmail:regmail},res=>{
-              if(res="save completed"){
+              if(res=="save completed"){
                 document.location="./album.html";
               }
             })
