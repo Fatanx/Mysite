@@ -32,34 +32,62 @@
 
 
     <div class="bg-choice">
-      <p class="full-tab">
-        <p  class = "bg-cl-choice">blue</p>
-        <p  class = "bg-cl-choice">red</p>
-        <p  class = "bg-cl-choice">sky</p>
-        <p  class = "bg-cl-choice">yellow</p>
-      </p>
+      <span class="full-tab">
+        <p class = "bg-cl-choice" onclick="changeBgcolor()">blue</p>
+        <p class = "bg-cl-choice" onclick="changeBgcolor()">red</p>
+        <p class = "bg-cl-choice" onclick="changeBgcolor()">sky</p>
+        <p class = "bg-cl-choice" onclick="changeBgcolor()">yellow</p>
+      </span>
       <p class="mini-tab">>></p>
     </div>
+
+
     <script type="text/javascript">
-    $("document").ready(function(){
-      $(".bg-choice").hover(function(){
-        $(".full-tab").css("display","block");
-      },function(){C
-        $(".full-tab").css("display","none");
-      });
 
-      $("bg-cl-choice").mouseover(function(){
-        $("full-tab").css("background-color","yellow");
-      });
+      $(document).ready(function(){
+        //tab显示
+        $(".bg-choice").hover(
+          function(){
+          $(".full-tab").css("display","block");
+        },function(){
+          $(".full-tab").css("display","none");
+        });
+        //指向改变颜色
+        $(".bg-cl-choice").hover(
+          function(event){
+            $(event.target).eq(0).css("background",bgParser($(event.target).text(),"color"));
+          },
+          function(){
+            $(event.target).eq(0).css("background","white")
+          }
+        );
+        //改变背景图
 
+      })
 
+      function changeBgcolor(){
+        var jq = $('body').eq(0);
+        var bgurl =bgParser($(window.event.target).text(),"url");
+        jq.css("background",bgurl);
+      };
 
-    })
-
-
-
-
-
+        function bgParser(word,_module){
+          if(_module == 'url'){
+            return "url('../images/bg-"+ word + ".jpg')"
+          }
+          else if (_module == 'color'){
+            switch(word){
+              case 'blue':
+              return "blue";
+              case 'red':
+              return "red";
+              case 'yellow':
+              return "yellow";
+              case 'sky':
+              return "#66ffff";
+            }
+          }
+        }
     </script>
   </body>
 </html>

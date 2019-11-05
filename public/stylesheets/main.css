@@ -29,6 +29,7 @@ div.content{
   font-size: 10px;
   border-radius: 0 5px 5px 0;
   border: solid 1px black;
+  cursor:default;
 }
 
 .bg-choice:hover{
@@ -38,6 +39,7 @@ div.content{
   position: absolute;
   border-radius: 0 5px 5px 0;
   border: solid 1px black;
+  cursor:default;
 }
 
 .mini-tab{
