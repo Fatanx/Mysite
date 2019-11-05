@@ -32,17 +32,6 @@
 
 
     <div class="bg-choice">
-      <div class="full-tab">
-        <p class = "bg-cl-choice">blue</p>
-        <p class = "bg-cl-choice">red</p>
-        <p class = "bg-cl-choice">sky</p>
-        <p class = "bg-cl-choice" style="background:black">yellow</p>
-      </div>
-      <p class="mini-tab">></p>
-    </div>
-    <script type="text/javascript">
-      $("document").ready(function(){
-        $(".bg-choice").hover(function(){
       <span class="full-tab" style="display:none">
         <p class = "bg-cl-choice" onclick="changeBgcolor()">blue</p>
         <p class = "bg-cl-choice" onclick="changeBgcolor()">red</p>
@@ -65,15 +54,6 @@
         },function(){
           $(".full-tab").css("display","none");
         });
-
-
-      });
-
-      $("bg-cl-choice").mouseover(function(){
-        $("bg-cl-choice").eq(0).css("background","red");
-        $("bg-cl-choice").eq(1).css("display","none");
-      });
-
         //指向改变颜色
         $(".bg-cl-choice").hover(
           function(event){
