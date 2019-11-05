@@ -32,6 +32,7 @@
 
 
     <div class="bg-choice">
+<<<<<<< HEAD
       <div class="full-tab">
         <p class = "bg-cl-choice">blue</p>
         <p class = "bg-cl-choice">red</p>
@@ -43,10 +44,31 @@
     <script type="text/javascript">
       $("document").ready(function(){
         $(".bg-choice").hover(function(){
+=======
+      <span class="full-tab" style="display:none">
+        <p class = "bg-cl-choice" onclick="changeBgcolor()">blue</p>
+        <p class = "bg-cl-choice" onclick="changeBgcolor()">red</p>
+        <p class = "bg-cl-choice" onclick="changeBgcolor()">sky</p>
+        <p class = "bg-cl-choice" onclick="changeBgcolor()">yellow</p>
+      </span>
+      <p class="mini-tab">></p>
+    </div>
+    <div class="footer"> 鄂ICP备19026213号-1<br>
+      <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42018502004261" >鄂公网安备 42018502004261号</a>
+    </div>
+
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+        //tab显示
+        $(".bg-choice").hover(
+          function(){
+>>>>>>> 094338fecf2fe861648b91be22572eae49625ca1
           $(".full-tab").css("display","block");
         },function(){
           $(".full-tab").css("display","none");
         });
+<<<<<<< HEAD
 
 
       });
@@ -56,6 +78,44 @@
         $("bg-cl-choice").eq(1).css("display","none");
       });
 
+=======
+        //指向改变颜色
+        $(".bg-cl-choice").hover(
+          function(event){
+            $(event.target).eq(0).css("background",bgParser($(event.target).text(),"color"));
+          },
+          function(){
+            $(event.target).eq(0).css("background","white")
+          }
+        );
+        //改变背景图
+
+      })
+
+        function changeBgcolor(){
+          var jq = $('body').eq(0);
+          var bgurl =bgParser($(window.event.target).text(),"url");
+          jq.css("background",bgurl);
+        };
+
+        function bgParser(word,_module){
+          if(_module == 'url'){
+            return "url('../images/bg-"+ word + ".jpg')"
+          }
+          else if (_module == 'color'){
+            switch(word){
+              case 'blue':
+              return "blue";
+              case 'red':
+              return "red";
+              case 'yellow':
+              return "yellow";
+              case 'sky':
+              return "#66ffff";
+            }
+          }
+        }
+>>>>>>> 094338fecf2fe861648b91be22572eae49625ca1
     </script>
   </body>
 </html>
