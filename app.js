@@ -3,6 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
+var FileStore = require('session-file-store')(session);
+
+var sessionMiddleware = session({
+  store:new FileStore(),
+  secret:'keyboard cat',
+  cookie:{maxAge:60000},
+})
+
 
 
 var indexRouter = require('./routes/index');
@@ -18,6 +27,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(sessionMiddleware);
 app.use(express.static(path.join(__dirname, 'public')));
 app.listen(80);
 app.use('/', indexRouter);

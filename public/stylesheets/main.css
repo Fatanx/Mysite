@@ -6,18 +6,20 @@
 body{
   background: url("../images/bg-blue.jpg" );
   width: auto;
+  height: 1100px;
 }
 
 
 div.content{
   margin-top: 70px;
-  position: absolute;
+  height: 90%;
+  position: relative;
   margin-left: 10%;
 }
 
 .tab-content{
   background: white;
-  min-height:700px;
+  min-height:300px;
 }
 
 .bg-choice{
@@ -53,11 +55,11 @@ div.content{
 }
 
 .footer{
-  position: absolute;
+  position: relative;
   width:100%;
   height: 90px;
   background-color:rgba(255,255,255,0.5);
-  top: 110%;
+  /* top: 110%; */
   text-align: center;
   line-height: 45px;
 

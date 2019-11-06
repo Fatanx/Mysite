@@ -34,8 +34,6 @@ async function readUser(usern,userp,res){
         console.log(usern + "错误登录名或密码");
       }
     }
-  res.send({msg:"错误登录名或密码"});
-  console.log(usern + "错误登录名或密码");
 }
 
 /* GET home page. */
@@ -44,6 +42,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/checkuser',function(req,res){
+  console.log(req.session);
   readUser(req.body["loginname"],req.body["loginpassword"],res);
 })
 
