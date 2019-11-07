@@ -107,6 +107,9 @@
         $(".send_key").attr("disabled",true);
         $.post("send_key/send",{email:mailadd},function(res){
           console.log(res.msg);
+          if(res.msg == success!){
+            msgbox_alert("验证码发送成功,请在邮箱查收!")
+          }
           codekey = res.key;
         })
         //将来添加
