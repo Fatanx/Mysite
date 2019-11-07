@@ -47,6 +47,7 @@
     <script type="text/javascript">
 
       $(document).ready(function(){
+        check_in();
         //tab显示
         $(".bg-choice").hover(
           function(){
@@ -66,6 +67,18 @@
         //改变背景图
 
       })
+        function check_in(){
+          $.get('/check_in_or_out/check',function(res){
+            if(res.msg == "in"){
+              console.log("已登录");
+            }
+            else{
+              console.log("未登录");
+              // $.get('./');
+              document.location='./';
+            }
+          })
+        };
 
         function changeBgcolor(){
           var jq = $('body').eq(0);

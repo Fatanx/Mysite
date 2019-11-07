@@ -1,18 +1,12 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
 
 router.post("/send",async function(req,res){
   const transport = nodemailer.createTransport({
-    // service:"outlook",
-    // host:"outlook.office365.com",
-    // port:993,
-    // secure:true,
-    // auth:{
-    //   user:"fatanxyz@hotmal.com",
-    //   pass:"tanxiao@21"
-    // }
+
     service: 'smtp.163.com',
     host: "smtp.163.com",
     secure: true,
@@ -27,13 +21,13 @@ router.post("/send",async function(req,res){
  let  mail_content = "";
  for(var i =0;i<10;i++){
     mail_content = mail_content +"\n"+ _arr[Math.round(Math.random()*_arr.length)];
-    console.log(mail_content);
  };
 
-
-
-
-  const randomNum = Math.round(Math.random()*10000);
+  let randomNum = Math.round(Math.random()*10000);
+  let randomNum_key = '';
+  let mmd5 = crypto.createHash("md5");
+  mmd5.update(randomNum+'');
+  randomNum_key = mmd5.digest('hex');
   console.log(randomNum);
   console.log(req.body['email']);
   const mailOptions = {
@@ -43,18 +37,14 @@ router.post("/send",async function(req,res){
     subject:"发送key用的邮件",
     text:"key:" + randomNum + "\n这是前端开发学习者开发的网站发出的邮件.\n网站目前还很简陋,感谢支持"+"\n\n\n"+mail_content
   }
-  console.log(mailOptions);
   await transport.sendMail(mailOptions,(error,info)=>{
     if (error) {
       res.send({msg:error})
     }
-    else(res.send({msg:"success!",key:randomNum}));
+    else{
+      res.send({msg:"success!",key:randomNum_key})
+    };
   });
-  // transport.sendmail(mailOptions,(error,info)=>{
-  //   console.log(req.body['email']);
-  //   if (error) {console.log(error); }
-  //   console.log('Message sent: %s', info.messageId);
-  // });
 });
 
 module.exports = router;

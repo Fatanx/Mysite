@@ -1,5 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const crypto = require("crypto");
+const sha = crypto.createHash("sha256")
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
 mongoose.Promise = Promise;
@@ -22,12 +24,13 @@ async function saveUser(username,userpassword,useremail){
 }
 
 
-async function readUser(usern,userp,res){
+async function readUser(usern,userp,res,req){
   const user =  await User.findOne({username:usern});
   if(user != null){
       if(user["userpassword"] == userp){
-        res.send({msg:"登录成功"});
         console.log(usern + "登录成功");
+        req.session.username = usern;
+        res.send({msg:"登录成功"});
       }
       else{
         res.send({msg:"错误登录名或密码"});
@@ -38,12 +41,17 @@ async function readUser(usern,userp,res){
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  if(req.session.username == null){
+    res.render('index', { title: 'Express' });
+  }
+  else{
+    res.render('jump');
+  };
 });
 
 router.post('/checkuser',function(req,res){
   console.log(req.session);
-  readUser(req.body["loginname"],req.body["loginpassword"],res);
+  readUser(req.body["loginname"],req.body["loginpassword"],res,req);
 })
 
 

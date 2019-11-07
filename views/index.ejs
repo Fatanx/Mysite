@@ -7,6 +7,7 @@
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
     <link rel='stylesheet' href='/stylesheets/index.css' />
     </head>
   <body>
@@ -90,8 +91,8 @@
 
       function go_login(event){
         var loginname = $("input.loginusername").eq(0).val();
-        var loginpassword = $("input.loginuserpassword").eq(0).val();
-        console.log(loginname);
+        var loginpassword = md5($("input.loginuserpassword").eq(0).val());
+        console.log(loginpassword);
         $.post("/checkuser",{loginname:loginname,loginpassword:loginpassword},function(res){
         if(res.msg == "登录成功"){
             document.location="./album.html";
@@ -119,13 +120,9 @@
 
       function go_logup(event){
         var regname = $(".regname").eq(0).val();
-        var regpassword = $(".regpassword").eq(0).val();
+        var regpassword = md5($(".regpassword").eq(0).val());
         var regmail = $(".regmail").eq(0).val();
-        var iskey = ($("input.input-key").eq(0).val()) &&(codekey ==  $("input.input-key").eq(0).val());
-
-        $(".regname").eq(0).val("");
-        $(".regpassword").eq(0).val("");
-        $(".regmail").eq(0).val("");
+        var iskey = ($("input.input-key").eq(0).val()) &&(codekey ==  md5($("input.input-key").eq(0).val()));
         if(regname && regpassword ){
           if(iskey){
           //验证正确
