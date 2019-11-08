@@ -40,6 +40,14 @@
       </span>
       <p class="mini-tab">></p>
     </div>
+
+    <div class="tip">
+      <ul style ="cursor:default">
+        <li><a href="./help.html">帮助</a></li>
+        <li><a href="./log.html">开发日志</a></li>
+        <li>退出登录</li>
+      </ul>
+    </div>
     <div class="footer"> 鄂ICP备19026213号-1<br>
       <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42018502004261" >鄂公网安备 42018502004261号</a>
     </div>
@@ -70,10 +78,9 @@
         function check_in(){
           $.get('/check_in_or_out/check',function(res){
             if(res.msg == "in"){
-              console.log("已登录");
+              console.log('登录了');
             }
             else{
-              console.log("未登录");
               // $.get('./');
               document.location='./';
             }
