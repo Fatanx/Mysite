@@ -25,7 +25,7 @@ div.content{
 
 .tab-content{
   background: white;
-  min-height:300px;
+  min-height:800px;
 }
 
 .bg-choice{
@@ -81,19 +81,35 @@ div.content{
   color: black ;
   transition: background 0.5s,color 0.5s;
 }
-
+/*此区间为record_box及其子元素style区域*/
 .record_box{
-  display: none;
-  width: 600px;
-  height: 450px;
+  /* display: none; */
+  width: 350px;
+  min-height: 200px;
   position:absolute;
   left:50%;
   top:50%;
   margin-left: -300px;
   margin-top: -225px;
+  border:solid 1px black;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  padding:10px;
 }
-
-
+.record_box input{
+  margin: 10px;
+  width:310px;
+}
+.record_box textarea{
+  margin: 10px;
+  width:310px;
+}
+.record_box button{
+  width:70px;
+  height: 35px;
+  margin: 7px;
+}
+/*此区间为record_box及其子元素style区域*/
 
 .footer{
   position: relative;

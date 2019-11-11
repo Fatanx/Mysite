@@ -64,12 +64,15 @@
 
     <div class="record_box">
       <form class="upload record" action="./routes/upimage" method="post">
-        <input type="file" name="myfile" value="" enctype="multipart/form-data">
+        <input type="file" name="myfile" value="" enctype="multipart/form-data" style="border:solid 1px black"><br>
         <input type="text" name="logname" value="" style = "display:none;">
         <input type="text" name="logtime" value="" style="display:none">
-        <input type="text" multiple = "true" name="" value="">
-        <input type="submit" name="" value="上传">
-        <button type="button" name="cancelRecord"></button>
+        <input type="text" name="logalbum" value="默认相册" style="display:none"><!--后期添加album目前使用"默认相册" -->
+        <textarea name="info" rows="4" cols="40"></textarea><br>
+        <center class="button_div">
+          <button type="button" name="uploadRecord">上传</button>
+          <button type="button" name="cancelRecord">取消</button>
+        </center>
       </form>
     </div>
 
@@ -133,8 +136,9 @@
         }
 
         function logout(){
-          $.get("/check_in_or_out",res={
+          $.get("/check_in_or_out/logout",res=>{
             console.log(res);
+            $(window).attr("location","./")
           })
         }
     </script>
