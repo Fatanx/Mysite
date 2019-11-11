@@ -82,6 +82,19 @@ div.content{
   transition: background 0.5s,color 0.5s;
 }
 
+.record_box{
+  display: none;
+  width: 600px;
+  height: 450px;
+  position:absolute;
+  left:50%;
+  top:50%;
+  margin-left: -300px;
+  margin-top: -225px;
+}
+
+
+
 .footer{
   position: relative;
   width:100%;
@@ -90,5 +103,4 @@ div.content{
   /* top: 110%; */
   text-align: center;
   line-height: 45px;
-
 }

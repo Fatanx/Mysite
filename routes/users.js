@@ -13,7 +13,11 @@ router.get("/check",function(req,res,next){
   else{
     res.send({msg:'in'});
   }
-
 });
+
+router.get('/logout',function(req,res,next){
+  req.session.username = null;
+  res.send("您已退出");
+})
 
 module.exports = router;

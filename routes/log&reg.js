@@ -35,4 +35,5 @@ router.post('/reg',function(req,res,next){
   res.send("save completed");
 });
 
+
 module.exports = router;

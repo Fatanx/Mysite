@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var multer = require("multer")
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
@@ -35,6 +36,7 @@ app.use('/users', usersRouter);
 app.use('/login',require("./routes/log&reg.js"));
 app.use('/send_key',require("./routes/email.js"));
 app.use('/check_in_or_out',require("./routes/users"));
+app.use('/image',require("./routes/imagesup"))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
