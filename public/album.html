@@ -24,7 +24,7 @@
       </ul>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <button type="button" name="button">记录瞬间</button>
+          <button type="button" name="button" onclick="$('.record_box').css('display','block');">记录瞬间</button>
           <!-- <form class="" action="/image/upimage" method="post" enctype="multipart/form-data">
             <input type="file" name="myfile" value="">
             <input type="submit" name="" value="上传">
@@ -63,22 +63,26 @@
     </div>
 
     <div class="record_box">
-      <form class="upload record" action="./routes/upimage" method="post">
-        <input type="file" name="myfile" value="" enctype="multipart/form-data" style="border:solid 1px black"><br>
-        <input type="text" name="logname" value="" style = "display:none;">
-        <input type="text" name="logtime" value="" style="display:none">
-        <input type="text" name="logalbum" value="默认相册" style="display:none"><!--后期添加album目前使用"默认相册" -->
-        <textarea name="info" rows="4" cols="40"></textarea><br>
+      <form class="upload record" action="/image/upimage" method="post" enctype="multipart/form-data" onsubmit="return form_function(res)">
+        <input type="file" name="myfile" value="" style="border:solid 1px black"><br>
+        <input type="text" name="myfile" value="" style = "display:none;">
+        <input type="text" name="myfile" value="" style="display:none">
+        <input type="text" name="myfile" value="默认相册" style="display:none"><!--后期添加album目前使用"默认相册" -->
+        <textarea name="myfile" rows="4" cols="40" placeholder="记录下这个瞬间!"></textarea><br>
+        <input type="submit" class = "record_submit"  name="myfile" value="" style="display:none">
         <center class="button_div">
-          <button type="button" name="uploadRecord">上传</button>
-          <button type="button" name="cancelRecord">取消</button>
+          <button type="button" name="uploadRecord" onclick="$('.record_submit').eq(0).click()">上传</button>
+          <button type="button" name="cancelRecord" onclick="$('.record_box').css('display','none');">取消</button>
         </center>
       </form>
     </div>
 
+    <div class="bg-cover" style="position:absolute;background:rgba(0,0,0,0.4);width:100%;height:100%;left:0;top:0;display:none"></div>
+
+
     <script type="text/javascript">
 
-      $(document).ready(function(){
+        $(document).ready(function(){
         check_in();
         //tab显示
         $(".bg-choice").hover(
@@ -99,6 +103,7 @@
         //改变背景图
 
       })
+
         function check_in(){
           $.get('/check_in_or_out/check',function(res){
             if(res.msg == "in"){
@@ -140,6 +145,11 @@
             console.log(res);
             $(window).attr("location","./")
           })
+        }
+
+        function form_function(res){
+          console.log(res.file);
+          return false;
         }
     </script>
   </body>

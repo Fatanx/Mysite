@@ -22,7 +22,7 @@
           <input type="text" class="form-control loginusername" placeholder="请输入用户名" aria-describedby="basic-addon1">
         </div>
         <div class="input-group">
-          <input type="password" class="form-control loginuserpassword " placeholder="请输入密码" aria-describedby="basic-addon1">
+          <input type="password" class="form-control loginuserpassword " placeholder="请输入密码" aria-describedby="basic-addon1" onkeypress="event_keypress(event)">
         </div>
         <div class="button-group">
           <button type="button" class="btn btn-light login" onclick="go_login()">登录</button>
@@ -145,6 +145,13 @@
           msgbox_alert("用户名密码不合要求");
         }
       }
+
+      function event_keypress(event){
+        if(event.keyCode==13){
+          console.log(123);
+          $('.login').eq(0).click()
+        }
+      };
     </script>
   </body>
 </html>
