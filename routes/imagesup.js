@@ -14,9 +14,5 @@ const fields = upload.fields([
 router.post("/upimage",single,function(req,res){
   res.send(req.file);
 });
-//传输
-router.post("/getminiimg",function(req,res){
-  
-})
 
 module.exports = router;

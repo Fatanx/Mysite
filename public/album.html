@@ -63,19 +63,15 @@
     </div>
 
     <div class="record_box">
-      <form class="upload record" action="/image/upimage" method="post" enctype="multipart/form-data" ><!--onsubmit="return form_function()"-->
-        <input class="file_input" type="file" name="myfile" value="" style="border:solid 1px black"><br>
-        <div class="image_minibox" style="max-width: 80px;max-height: 80px">
-          <img class="mini_image" src="" alt="">
-        </div><br>
-        <input type="text" name="upload_time" value="" style = "display:none;">
-        <input type="text" name="upload_user" value="" style="display:none">
+      <form class="upload record" action="/image/upimage" method="post" enctype="multipart/form-data" onsubmit="return form_function(res)">
+        <input type="file" name="myfile" value="" style="border:solid 1px black"><br>
+        <input type="text" name="myfile" value="" style = "display:none;">
+        <input type="text" name="myfile" value="" style="display:none">
         <input type="text" name="myfile" value="默认相册" style="display:none"><!--后期添加album目前使用"默认相册" -->
         <textarea name="myfile" rows="4" cols="40" placeholder="记录下这个瞬间!"></textarea><br>
-        <!-- <input type="submit" class = "record_submit"  name="myfile" value="" style="display:none"> -->
+        <input type="submit" class = "record_submit"  name="myfile" value="" style="display:none">
         <center class="button_div">
-          <!-- <button type="button" name="uploadRecord" onclick="$('.record_submit').eq(0).click()">上传</button> //不使用submit上传-->
-          <button type="button" name="submit" onclick="up_load()">上传</button>
+          <button type="button" name="uploadRecord" onclick="$('.record_submit').eq(0).click()">上传</button>
           <button type="button" name="cancelRecord" onclick="$('.record_box').css('display','none');">取消</button>
         </center>
       </form>
@@ -87,25 +83,26 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
-          check_in();
-          //tab显示
-          $(".bg-choice").hover(
-            function(){
-            $(".full-tab").css("display","block");
-          },function(){
-            $(".full-tab").css("display","none");
-          });
-          //指向改变颜色
-          $(".bg-cl-choice").hover(
-            function(event){
-              $(event.target).eq(0).css("background",bgParser($(event.target).text(),"color"));
-            },
-            function(){
-              $(event.target).eq(0).css("background","white")
-            }
-          );
-          //改变背景图
-        })
+        check_in();
+        //tab显示
+        $(".bg-choice").hover(
+          function(){
+          $(".full-tab").css("display","block");
+        },function(){
+          $(".full-tab").css("display","none");
+        });
+        //指向改变颜色
+        $(".bg-cl-choice").hover(
+          function(event){
+            $(event.target).eq(0).css("background",bgParser($(event.target).text(),"color"));
+          },
+          function(){
+            $(event.target).eq(0).css("background","white")
+          }
+        );
+        //改变背景图
+
+      })
 
         function check_in(){
           $.get('/check_in_or_out/check',function(res){
@@ -114,7 +111,7 @@
             }
             else{
               // $.get('./');
-              this.document.location='./';
+              document.location='./';
             }
           })
         };
@@ -150,36 +147,9 @@
           })
         }
 
-
-        function up_load(){
-          var up_msg={};
-          console.log("我进来了");
-          console.log($('.file_input'));
-          console.log($('.file_input').eq(0).val());
-          up_msg['myfile'] = $('.file_input').eq(0)['files'];
-          up_msg['info'] = {
-            'time':$('form.up_oad').children().eq(2).val(),
-            'user':$('form.up_oad').children().eq(3).val(),
-            'album':$('form.up_oad').children().eq(4).val(),
-            'info':$('form.up_oad').children().eq(5).val(),
-          }
-          console.log(up_msg);
-          $.post("/image/upimage",{up_msg},function(res){
-            console.log(res);
-            console.log("上传成功");
-          })
-        }
-
-        function show_image(mode){
-          var msg = '';
-          if(mode == 'mini'){
-            $.post("/image/getminiimg",{msg},function(res){
-              $(".mini_image").eq(0).attr("src",res.msg);
-            })
-          }
-          else{
-            return true;
-          }
+        function form_function(res){
+          console.log(res.file);
+          return false;
         }
     </script>
   </body>
