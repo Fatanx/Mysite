@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Fatan</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -11,10 +10,13 @@
     <link rel='stylesheet' href='/stylesheets/index.css' />
     </head>
   <body>
-    <div class="container">
+    <div class="container1">
       <!-- Content here -->
-      <h1>Fatan.xyz </h1>
-      <p>Welcome to my website and enjoy that,</br>this site is being devoloping</p>
+      <div class="centerdiv">
+        <h1>Fatan.xyz </h1>
+        <p>Welcome to my website and enjoy that,</br>this site is being devoloping</p>
+      </div>
+      
     </div>
     <div class = "loginbox box">
       <form class="" action="index.html" method="post">
@@ -32,6 +34,9 @@
     </div>
 
     <div class="regbox box">
+      <a class= "reg 1"></a>
+      <a class = "reg 2" onclick="changeRegMethod()" style="color:darkorange"></a>
+      <p></p>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text " id="basic-addon1">请输入用户名:</span>
@@ -48,7 +53,7 @@
 
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1">请输入邮箱:</span>
+          <span class="input-group-text span_mailortel" id="basic-addon1">请输入邮箱:</span>
         </div>
         <input type="text" class="form-control regmail" placeholder="Email" aria-label="Password" aria-describedby="basic-addon1">
       </div>
@@ -59,7 +64,7 @@
         </div>
         <input type="text" class="form-control input-key" placeholder="code" aria-label="code" aria-describedby="basic-addon1">
         <div class="input-group-prepend">
-          <span class="input-group-text send-key" id="basic-addon1" onclick="send_key()" style="cursor:default">发送验证码</span>
+          <span class="input-group-text send-key" id="basic-addon1" style="cursor:default">发送验证码</span>
         </div>
       </div>
 
@@ -69,8 +74,10 @@
         </div>
     </div>
 
-    <div class="footer"> 鄂ICP备19026213号-1<br>
-      <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42018502004261" >鄂公网安备 42018502004261号</a>
+    <div class="footer">
+      <p> 鄂ICP备19026213号-1</p>
+      <p><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42018502004261" >鄂公网安备 42018502004261号</a></p>
+      
     </div>
 
     <div class="msgbox box">
@@ -79,6 +86,10 @@
 
 
     <script type="text/javascript">
+      $("document").ready(function(){
+        changeRegMethod();
+      });
+
       function go_reg(event){
         $(".loginbox").css("display","none");
         $(".regbox").css("display","block");
@@ -90,12 +101,12 @@
       }
 
       function go_login(event){
-        var loginname = $("input.loginusername").eq(0).val();
-        var loginpassword = md5($("input.loginuserpassword").eq(0).val());
-        console.log(loginpassword);
+        let loginname = $("input.loginusername").eq(0).val();
+        let loginpassword = md5($("input.loginuserpassword").eq(0).val());
         $.post("/checkuser",{loginname:loginname,loginpassword:loginpassword},function(res){
         if(res.msg == "登录成功"){
-            document.location="./album.html";
+            // document.location="./album.html";
+            location.reload();
         }
         else{alert(res.msg)};
         });
@@ -103,16 +114,37 @@
 
       var codekey = '';
       function send_key(event){
-        var mailadd = $(".regmail").eq(0).val()
-        $(".send_key").attr("disabled",true);
-        $.post("send_key/send",{email:mailadd},function(res){
-          console.log(res.msg);
-          if(res.msg == 'success!'){
-            msgbox_alert("验证码发送成功,请在邮箱查收!")
-          }
-          codekey = res.key;
-        })
-        //将来添加
+        var mailadd = $(".regmail").eq(0).val();
+        let ex = /^([a-zA-Z0-9_-]{1,10})+@([a-zA-Z0-9_-]{1,5})+(.com)$/;
+        let ex_true = ex.test(mailadd) ;
+        if(ex_true){
+          $(".send_key").attr("disabled",true);
+          $.post("send_key/send",{email:mailadd},function(res){
+            if(res.msg == 'success!'){
+              msgbox_alert("验证码发送成功,请在邮箱查收!")
+            }
+            codekey = res.key;
+          })
+        //将来添加加密
+        }
+        else{
+          msgbox_alert("请使用正确的邮箱");
+        }
+      }
+
+      function send_key_byphone(event){
+        let mailadd = $(".regmail").eq(0).val();
+        let ex = /^1[0-9]{10}/;
+        let ex_true = ex.test(mailadd)&&mailadd.length == 11;        
+        if (ex_true){
+          mailadd = "+86" + mailadd;
+          $.post("/ssms",{PhoneNO:mailadd},res=>{
+            msgbox_alert("验证码已发送给手机")
+          })
+        }
+        else {
+          msgbox_alert("请输入正确的手机号码") ;
+        }
       }
 
       function msgbox_alert(_msg){
@@ -148,10 +180,39 @@
 
       function event_keypress(event){
         if(event.keyCode==13){
-          console.log(123);
           $('.login').eq(0).click()
         }
       };
+
+      let index_reg = 1;//1为邮箱,2为手机
+      function changeRegMethod(event){
+        let JQ_a = $(".reg");
+        let JQ_span = $(".span_mailortel").eq(0);
+        let JQ_input = $(".regmail").eq(0);
+        let JQ_btn_sendKey = $(".send-key").eq(0);
+        JQ_input.val("");
+        JQ_a.css("display","block");
+        JQ_a.eq(0).css("font-size","26px");
+        console.log(JQ_input);
+        
+        if(index_reg){
+          JQ_a.eq(0).text("使用邮箱注册") ;
+          JQ_a.eq(1).text("或使用手机注册");
+          JQ_span.text("请输入邮箱");
+          JQ_input.attr("placeholder","Email");
+          JQ_btn_sendKey.attr('onclick','send_key();');
+          index_reg = 0;
+        }
+        else if(!index_reg){
+          JQ_a.eq(0).text("使用手机注册") ;
+          JQ_a.eq(1).text("或使用邮箱注册");
+          JQ_span.text("请输入手机");
+          JQ_input.attr("placeholder","Tel");
+          JQ_btn_sendKey.attr('onclick','send_key_byphone();');
+          index_reg = 1;
+        }
+      }
+
     </script>
   </body>
 </html>

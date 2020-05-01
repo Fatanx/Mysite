@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../stylesheets/shareInfo.css">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <title>管理</title>
+    <style>
+        .box{
+            font-size:0px;
+            top:30%;
+            padding:3px;
+        }
+        .info-box{
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid black;
+            width:90%;
+        }
+        .info-title{
+            width: 95%;
+            font-size: 25px;
+            background-color: goldenrod;
+            color: honeydew;
+        }
+        .info-introduce{
+            font-size: 12px;
+            width:98%;
+            min-height: 600px;
+        }
+        .img{
+            border:1px red solid;
+            margin: 5px;
+        }
+        .button_close{
+            margin-left : 70%;
+            width : 60px;
+            height : 30px;
+            right : 5px;
+            background : red;
+        }
+        p{
+            font-size:12px;
+        }
+        button{
+            width: 100%;
+        }
+        input{
+            width:95%;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <button onclick="saveJson()">保存</button>
+    </div>
+</body>
+<script>
+getInfo();
+// var img_url_left = "../images/shareinfo/";//远程
+var img_url_left = "../images/shareinfo/";
+var dom_d_box = document.getElementsByClassName("box")[0];
+
+function getInfo(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('get','../data/shareinfo.json',true);
+        // xhr.open('get','../data/abgn.json',true);
+        xhr.send();
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                let result = JSON.parse(xhr.responseText);
+                infolist = result;
+                showInfo();
+            }
+        }
+    }
+
+    function showInfo(){
+        for(let i in infolist){
+            let info = infolist[i];
+            let title = info["title"];
+            let imglist = info["img"];
+            let content = info["content"];
+
+            let dom_title = getTitle(title);
+
+            let dom_content = document.createElement("div");
+            dom_content.className = "img-content";
+            // dom_content.style.display = "none";
+            let dom_content_img = getImg(imglist);
+            let dom_content_p = getContent(content);
+            dom_content.appendChild(dom_content_p);
+            dom_content.appendChild(dom_content_img)
+
+            let dom_info_box = document.createElement("div");
+            dom_info_box.className = "info-box";
+            // dom_info_box.onclick = changeDisplay;
+            dom_info_box.appendChild(dom_title);
+            dom_info_box.appendChild(dom_content);
+            dom_d_box.appendChild(dom_info_box);
+        }
+        let dom_content = document.getElementsByClassName("img-content")[0];
+        let dom_b_addItem = document.createElement("button");
+        dom_b_addItem.innerHTML = "添加新的项目";
+        dom_b_addItem.onclick =function(event){
+            addNewItem(event.target);
+        };
+        dom_content.appendChild(dom_b_addItem);
+
+
+    }
+
+    function getTitle(title){
+        let dom_title = document.createElement("input");
+        dom_title.className="info-title";
+        dom_title.value = title;
+        return dom_title;
+    }
+
+    function getImg(imglist){
+        let dom_d_img = document.createElement("div");
+        dom_d_img.className = "img";
+        let dom_b_close = document.createElement("button");
+        dom_b_close.className = "button_close";
+        dom_b_close.innerHTML = "删除";
+        dom_b_close.onclick = function(event){
+            delItem(event);
+        }
+        dom_d_img.appendChild(dom_b_close);
+        dom_d_img.appendChild(document.createElement("br"));
+        for(let img in imglist){
+            //获得url
+            let imgurl = imglist[img][0];
+            let dom_img = document.createElement("img");
+            dom_img.src = img_url_left + imgurl;
+            dom_img.style.width = "100%";
+            dom_img.className = "info-img";
+            //获得text
+            let imgintro = imglist[img][1];
+            let dom_p = document.createElement("input");
+            dom_p.className = "img-introduce";
+            dom_p.value = imgintro;
+            //appen
+            dom_d_img.append(dom_img);
+            dom_d_img.append(dom_p);
+        }
+        return dom_d_img;
+    }
+
+    //正文获取
+    function getContent(content){
+        let dom_content_p = document.createElement("textarea");
+        dom_content_p.value = parseText(content);
+        dom_content_p.className="info-introduce";
+        return dom_content_p;
+    }
+
+    //json文字转换正文文字
+    function parseText(innerText){
+        let strText = innerText.replace(/<\/br>/g,'\r\n');//</br>部分转换 \r\n
+        strText = strText.replace(/<b>/g,"");
+        strText = strText.replace(/<\/b>/g,"$black");
+        return strText;
+    }
+    //正文文字转inner文字
+    function parseInner(strText){
+        strText = document.getElementsByClassName("info-introduce")[0].value;
+        console.log(strText);
+        
+        let arrText = strText.split("\n");
+        let innerText = "";
+        arrText.forEach(arr=>{
+            if(/\$black/.test(arr)){
+                arr = arr.replace("$black","");
+                arr = "<b>" + arr + "</b>";
+            }
+            arr += "</br>";
+            innerText += arr;
+        })
+        console.log(innerText);
+        return innerText;
+    }
+
+    function addNewItem(target){
+        let dom_imgContent = document.getElementsByClassName("img-content")[0];
+        let dom_d_img = document.createElement("div");
+        dom_d_img.className="img";
+
+        let dom_b_close = document.createElement("button");
+        dom_b_close.className = "button_close";
+        dom_b_close.innerHTML = "删除";
+        dom_b_close.onclick = function(evnet){
+            delItem(evnet);
+        }
+        dom_d_img.appendChild(dom_b_close);
+        dom_d_img.appendChild(document.createElement("br"));
+        let dom_img = document.createElement("img");
+        dom_img.style.width = "100%";
+        dom_img.className = "info-img";
+        let dom_i_path = document.createElement("input");
+        dom_i_path.type = "file";
+        dom_i_path.onchange = function(event){
+            updateImg(event);
+        }
+        let dom_p = document.createElement("input");
+        dom_p.className = "img-introduce";
+        dom_p.placeholder = "请输入图片描述";
+            //appen
+        dom_d_img.append(dom_img);
+        dom_d_img.append(dom_i_path);
+        dom_d_img.append(dom_p);
+        dom_imgContent.insertBefore(dom_d_img,dom_imgContent.lastChild);
+    }
+
+    function delItem(event){
+        event.target.parentNode.remove();
+    }
+
+    function updateImg(event){
+        let imgData = new FormData();
+        imgData.append("file",event.target.files[0]);
+        console.log(imgData);
+        
+        // $.post("/QR/upimg",imgData,res=>{
+        //     console.log(123);
+            
+        // })
+        $.ajax({
+            url: "/QR/upimg",
+            type:"POST",
+            dataType: 'json',
+            //data: JSON.stringify({data:{status: "start"}}),
+            data: imgData,
+            cache: false,
+            contentType: false, 
+            processData: false,
+            success: function(res){
+                let filename = res.msg;
+                console.log(1);
+                showImg(filename,event.target.parentNode);
+            },
+            error: function(e) {}
+        })
+    }
+
+    //显示图片内容
+    function showImg(imgName,dom){
+        let path = img_url_left + imgName ;
+        console.log(2);
+        let dom_img = dom.getElementsByClassName("info-img")[0];
+        dom_img.src = path;
+    }
+
+    //保存json
+    function saveJson(){
+        let dom_title = document.getElementsByClassName("info-title")[0];
+        let dom_img_content = document.getElementsByClassName("img-content")[0];
+        console.log(dom_img_content);
+        
+
+        let text_title = dom_title.value;//获取标题内容
+        let text_content = dom_img_content.getElementsByClassName("info-introduce")[0].value;//获得content中的introduce内容
+
+        let doms_img = dom_img_content.getElementsByClassName("img");
+        console.log(doms_img);
+        
+        let urllist = {
+            "社区":{
+                "title":"",
+                "img":{},
+                "content":""
+            }
+        }
+        urllist["社区"].title = text_title;
+        urllist["社区"].content = parseInner(text_content);
+        let i = 0;
+        let mapUrl = {};
+        Array.from(doms_img).forEach(dom_img => {
+            let url = dom_img.getElementsByClassName("info-img")[0].src;
+            console.log(url);
+            let name = url.split('\/')[url.split('\/').length - 1];
+            console.log(i,name);
+            let text = dom_img.getElementsByClassName("img-introduce")[0].value;
+            let arr =[];
+            arr.push(name);
+            arr.push(text);
+            mapUrl["url"+i] = arr;
+            i += 1;
+        })
+        urllist["社区"].img = mapUrl;
+        if(makeSureNoEmpty()){
+            $.post("/QR/saveShareinfo",{data : JSON.stringify(urllist)},res=>{
+                if(res.result){
+                    alert("保存成功");
+                    // window.location = "http://fatan.xyz/QRandRecord/shareInfo.html";
+                }
+                else{
+                    console.log("未知错误,请联系:18986270059");
+                }
+            })
+        }
+        else{
+            alert("信息未填写完整.请补充");
+        }
+    }
+
+    function makeSureNoEmpty(){
+        let doms_img = document.getElementsByClassName("info-img");
+        let doms_introduce = document.getElementsByClassName("img-introduce");
+        let result = true;
+        Array.from(doms_img).forEach(dom =>{
+            if(!dom.src){
+                result = result && false;
+            }
+        })
+        Array.from(doms_introduce).forEach(dom =>{
+            if(!dom.value){
+                result = result && false;
+            }
+        })
+        return result;
+    }
+
+</script>
+</html>

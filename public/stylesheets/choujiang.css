@@ -1,0 +1,26 @@
+
+.box{
+    font-size: 25px;
+    width:600px;
+    min-height:800px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -300px;
+    margin-top: -400px;
+    text-align: center;
+  }
+  h1{        
+    font-size: 60px;
+  }
+  button{
+    font-size:40px;
+    margin:10px;
+    width:80%;
+    height:50px;
+  }
+  input,select{
+      width: 80%;
+      height: 55px;
+      font-size: 40px;
+  }

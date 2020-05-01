@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../stylesheets/choujiang.css">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+    <style media="screen">
+ 
+      input,button,p {
+          margin:10px;
+      }
+      p{
+        color: red;
+      }
+      table{
+        width:70%;
+        margin-left: 15%;
+        text-align: center;
+      }
+      tr{
+        border: 3px solid black;
+      }
+    </style>
+    <title></title>
+  </head>
+  <body>
+    <div class="box">
+      <table>
+        <thead></thead>
+        <tbody class="table1">
+          <tr>
+            <th><h1>姓名</h1></th>
+            <th><h1>分数</h1></th>
+            <th class="btn del"></th>
+          </tr>
+        </tbody>
+        <tfoot></tfoot>
+        
+      </table>
+      <button style="height:40px ;font-size:25px" onclick="operate()">管理</button>
+    </div>
+  </body>
+  <script type="text/javascript">
+    window.onload = function(){
+      $.get('/reg1/getall',res=>{
+        let test = res.msg;
+        console.log(res.msg);
+        var line = test.split(',');
+        let dom_box = document.getElementsByClassName('box')[0];
+
+        let dom_table = document.getElementsByClassName("table1")[0];
+        for(let i = 0 ; i < line.length-1;i ++){
+          let dom_tr = document.createElement("tr");
+
+          let dom_td_name = document.createElement("td");
+          let dom_td_score = document.createElement("td");
+          let dom_td_del = document.createElement("td");
+
+          let row = line[i].split('+');
+
+          let dom_text_name = document.createTextNode(row[0]);
+          let dom_text_score = document.createTextNode(row[4]);
+          let dom_button  = document.createElement("button");
+
+          dom_td_name.appendChild(dom_text_name);
+          dom_td_score.appendChild(dom_text_score);
+          
+          dom_button.innerHTML = "删除";
+          dom_button.onclick = function(){
+            del_score(row[5]);
+            dom_tr.remove();
+
+          }
+          dom_td_del.className = "btn del";
+          dom_td_del.style.display = "none";
+          // dom_td_del.style.width ="0px";
+          console.log(dom_td_del.style);
+          
+          dom_td_del.appendChild(dom_button);
+
+          dom_tr.appendChild(dom_td_name);
+          dom_tr.appendChild(dom_td_score);
+          dom_tr.appendChild(dom_td_del);
+          
+          dom_table.appendChild(dom_tr);
+        }
+      })
+    }
+
+    function del_score(key){
+      $.post("/reg1/delscore",{key:key},res=>{
+        console.log(res);
+      })
+    }
+
+    function operate(){
+      var pass = window.prompt("请输入管理密码！");
+      $.post("/reg1/oppass",{pass:pass},res=>{
+        if(res.result){
+          showDel();
+        }
+        else{
+          window.alert(res.msg)
+        }
+      })
+    }
+
+    function showDel(){
+      let dom_tds = document.getElementsByClassName("del");
+      for(let onedom of dom_tds){
+        onedom.style.display = "block";
+        console.log(onedom);
+      }
+    }
+  </script>
+</html>

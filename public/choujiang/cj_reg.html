@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../stylesheets/choujiang.css">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+    <style media="screen">
+      
+      input,button,p {
+          margin:10px;
+      }
+      p{
+        color: red;
+      }
+    </style>
+    <title></title>
+  </head>
+  <body>
+    <div class="box">
+      <form class="" action="index.html" method="post">
+        <input type="text" name="" class="name" value="" placeholder="在这里输入名字">
+        <br>
+        <input type="text" name="" class="tel" value="" placeholder="在这里输入手机号后四位">
+        <br>
+        <button type="button" name="button" onclick="reg()">注册</button>
+        <br>
+      </form>
+      <p>tip1:输入姓名和手机号后点击注册</p>
+      <p>请勿重复注册</p>
+      <p>tip2:请准确输入手机号后四位</p>
+      <p>如果不是四位数字,将被降权</p>
+    </div>
+  </body>
+  <script type="text/javascript">
+    window.onload=function(){
+      $.get("/reg1/checklogin",res=>{
+        if(res.msg == "login!"){
+          document.location = "../choujiang.html" ;
+        }
+        else{console.log(res.msg);}
+      })
+    }
+
+    function reg(){
+      let _name = $("input.name").eq(0).val();
+      let _tel = $("input.tel").eq(0).val();
+      if(_name && _tel){
+        $.post("/reg1/add_name",{name:_name,tel:_tel},function(res){
+        alert(res.msg);
+        if(res.result){
+          document.location = "../choujiang.html";
+        }
+        })
+      }
+      else(window.alert("请输入正确的姓名和手机号后四位!"))
+    }
+  </script>
+</html>

@@ -1,0 +1,16 @@
+.box{
+    font-size: 25px;
+    width:300px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -200px;
+    text-align: center;
+  }
+
+  img{
+    width: 90%;
+    left:50%;
+    
+  }

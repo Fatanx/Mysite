@@ -20,6 +20,20 @@ body{
   border-radius: 5px;
   text-align: center;
 }
+
+.container1{
+  position: relative;
+  text-align: center;
+  top:5%;
+}
+
+.centerdiv{
+  position: relative;
+  width: 80%;
+  left:10%;
+  text-align:left;
+}
+
 .loginbox input{
   width: auto;
   height: auto;
@@ -31,15 +45,16 @@ body{
 
 .msgbox{
   width:150px;
-  height:90px;
   position: absolute;
   left:50%;
   top:35%;
   margin-left: -75px;
   margin-top: 45px;
   padding: 30px 0;
+  background-color: skyblue;
+  font-size: 22px;
+  color: white;
   display: none;
-
 }
 
 .button-group{
@@ -57,23 +72,32 @@ body{
   height:150px;
   margin-left:  -115px;
   margin-top: -75px;
-  display: block;
 }
 
 .regbox{
   width:360px;
-  height: 280px;
+  height: 360px;
   margin-left:  -180px;
-  margin-top: -120px;
+  margin-top: -180px;
   display: none;
 }
 .footer{
   position: absolute;
-  left: -10%;
-  width:110%;
   height: 90px;
   background-color:rgba(255,255,255,0.5);
   bottom: 0px;
   text-align: center;
   line-height: 45px;
+
+  font-size: 0px;
+  width:inherit;
+  background-color:rgba(255,255,255,0.5);
+  /* top: 110%; */
+  line-height: 45px;
+}
+
+.footer>p{
+  font-size: 18px;
+  text-align: center;
+  margin: 0 ;
 }

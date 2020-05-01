@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="../stylesheets/QR.css"> -->
+    <link rel="stylesheet" href="../stylesheets/shareInfo.css">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <style>
+        .box{
+            font-size:0px;
+            top:30%;
+        }
+        .info-box{
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid black;
+            width:90%;
+        }
+        .info-title{
+            height: 50px;
+            font-size: 35px;
+            background-color: goldenrod;
+            color: honeydew;
+        }
+        .info-introduce{
+            font-size: 12px;
+        }
+        p{
+            font-size:12px;
+        }
+    </style>
+    
+    <title>信息分享</title>
+</head>
+<body>
+    <div class="box">
+    </div>
+
+</body>
+<script>
+    getInfo();
+    var img_url_left = "../images/shareinfo/";
+    var dom_d_box = document.getElementsByClassName("box")[0];
+
+    var infolist = {};
+    function getInfo(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('get','../data/shareinfo.json',true);
+        // xhr.open('get','../data/abgn.json',true);
+        xhr.send();
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                let result = JSON.parse(xhr.responseText);
+                infolist = result;
+                showInfo();
+            }
+        }
+    }
+
+    function showInfo(){
+        for(let i in infolist){
+            let info = infolist[i];
+            let title = info["title"];
+            let imglist = info["img"];
+            let content = info["content"];
+
+            let dom_title = getTitle(title);
+
+            let dom_content = document.createElement("div");
+            dom_content.className = "img-content";
+            // dom_content.style.display = "none";
+            let dom_content_img = getImg(imglist);
+            let dom_content_p = getContent(content);
+            dom_content.appendChild(dom_content_p);
+            dom_content.appendChild(dom_content_img)
+
+            let dom_info_box = document.createElement("div");
+            dom_info_box.className = "info-box";
+            dom_info_box.onclick = changeDisplay;
+            dom_info_box.appendChild(dom_title);
+            dom_info_box.appendChild(dom_content);
+            dom_d_box.appendChild(dom_info_box);
+        }
+    }
+
+    function changeDisplay(aa){
+        if(aa.target.parentNode.className == "info-box"){
+            if(aa.target.parentNode.lastChild.style.display == "none"){
+                aa.target.parentNode.lastChild.style.display = "block";
+            }
+            else {aa.target.parentNode.lastChild.style.display = "none";}
+        }
+    }
+
+    function getTitle(title){
+        let dom_title = document.createElement("div");
+        dom_title.className="info-title";
+        dom_title.innerHTML = title;
+        return dom_title;
+    }
+    function getImg(imglist){
+        let dom_d_img = document.createElement("div");
+        dom_d_img.className = "img";
+        for(let img in imglist){
+            //获得url
+            let imgurl = imglist[img][0];
+            let dom_img = document.createElement("img");
+            dom_img.src = img_url_left + imgurl;
+            dom_img.className = "info-img";
+            //获得test
+            let imgintro = imglist[img][1];
+            let dom_p = document.createElement("p");
+            dom_p.innerHTML = imgintro;
+            //appen
+            dom_d_img.append(dom_img);
+            dom_d_img.append(dom_p);
+        }
+        return dom_d_img;
+    }
+    function getContent(content){
+        let dom_content_p = document.createElement("p");
+        dom_content_p.innerHTML=content;
+        dom_content_p.className="info-introduce";
+        return dom_content_p;
+    }
+</script>
+</html>

@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/QR.css">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="box">
+        <!-- 姓名手机号 box-chi[0]-->
+        <div class="box-chi" >
+            <input id="Iname" type="text" placeholder="请输入姓名">
+            <input id="Itel" type="text" placeholder="请输入手机号">
+        </div>
+        <!-- 地址填写 box-chi[1]-->
+        <div class="box-chi" style="display:none">
+            <select id="Iarea" name="" onchange="selectArea()">
+                <option value="" >请选择小区</option>
+            </select>
+            <select name="" id="Ibuild" onchange="selectBuild()">
+                <option value="">请选择楼栋</option>
+            </select>
+            <select name="" id="Igroup">
+                <option value="">请选择单元</option>
+            </select>
+            <input type="text" id="Inumber" placeholder="请输入房号,如701、1004"></input>
+            <!-- <select name="" id="Inumber">
+                <option value="">请选择户号</option>
+            </select> -->
+        </div>
+        <button id = "next" onclick="next()">下一步</button>
+        <button id = "confirm" onclick ="confirm()" style="display:none">确定</button>
+        <!-- 地址显示 box-chi[2]-->
+        <div class="box-chi" style="display:none">    
+            <p id="p_name">姓名:</p>
+            <p id="p_tel">电话:</p>
+            <p id="p_add">地址:</p>
+        </div>
+        <!-- 二维码 box-chi[3]-->
+        <div class="box-chi" style="display:none;width: initial;" >
+            <div class="QR-box" id="qrcode" style="width:80%"></div>
+        </div>
+    </div>
+
+ 
+</body>
+<script>
+    var dom_QR = document.getElementsByClassName("QR_box")[0];
+    var dom_boxchis = document.getElementsByClassName("box-chi");
+
+    var dom_input_name = document.getElementById("Iname");
+    var dom_input_tel = document.getElementById("Itel");
+    var dom_input_area = document.getElementById("Iarea");
+    var dom_input_build = document.getElementById("Ibuild");
+    var dom_input_group = document.getElementById("Igroup")
+    var dom_input_number = document.getElementById("Inumber");
+    var dom_button_next = document.getElementById("next")
+    var dom_button_confirm = document.getElementById("confirm")
+    var dom_p_name = document.getElementById("p_name");
+    var dom_p_tel = document.getElementById("p_tel");
+    var dom_p_add = document.getElementById("p_add");
+
+    // 二维码
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        width : 100,
+        height : 100
+    });
+
+    window.onload = function(){
+        getArea();
+        $.post("/QR/checkname",{msg:"none"},res=>{
+            if(res.result == true){
+                makeCode(res.text);
+                showInfo(res.info);
+                logIn();
+            }
+        })
+    }
+
+    //第一次点击下一步
+    function next(){
+        let Iname = dom_input_name.value;
+        let Itel = dom_input_tel.value;
+        let ex = /^1[0-9]{10}/;
+        let tel_ex = ex.test(Itel) && Itel.length == 11;
+        if(Iname && Itel && tel_ex){
+            $.post("/QR/RegorLog",{name:Iname,tel:Itel},res=>{
+                if(res.result == true){//返回数据为真，登录成功，显示二维码
+                    //let QRtext = "http://fatan.xyz/QR/Record/" + res.text ;
+                    let QRtext =  res.text ;
+                    logIn();
+                    showInfo(res.info);
+                    makeCode(QRtext);
+                }
+                else if(res.msg == "next"){
+                    dom_boxchis[1].style.display = "block"
+                    nextToreg();
+                    regNext();
+                }
+                else{
+                    window.alert(res.msg);
+                }
+            })
+        }
+    }
+    
+    //点击确定
+    function confirm(){
+        let add_result = dom_input_area.selectedIndex * dom_input_build.selectedIndex * dom_input_group.selectedIndex * dom_input_number.selectedIndex;
+        if(add_result != 0){
+            $.post("/QR/reg",{
+                name:dom_input_name.value,
+                tel:dom_input_tel.value,
+                area:dom_input_area.value,
+                build:dom_input_build.value,
+                group:dom_input_group.value,
+                number:dom_input_number.value
+            },res=>{
+            if(res.result == true){
+                makeCode(res.text);
+                showInfo(res.info);
+                logIn();
+            }
+            })
+        }
+    }
+    
+    
+    //显示二维码
+    function makeCode (text){
+        text = "http://fatan.xyz/QR/Record/"+ text;
+        qrcode.makeCode(text);
+        dom_boxchis[3].style.display = "block";
+    }
+    
+    //注册验证
+    function regNext(){
+        dom_input_name.disable = false;
+        dom_input_tel.disable = false;
+    }
+
+    //登录成功
+    function logIn(){
+        dom_boxchis[0].style.display="none";
+        dom_boxchis[1].style.display="none";
+        dom_boxchis[2].style.display="block";
+        dom_button_next.style.display="none";
+        dom_button_confirm.style.display="none";
+    }
+
+    //下一步转注册
+    function nextToreg(){
+        dom_button_next.style.display = "none";
+        dom_button_confirm.style.display = "";
+    }
+
+    //显示信息数据
+    function showInfo(info){
+        let arr_info = info.split(',')
+        let name = "姓名:" + arr_info[0];
+        let tel = "电话:" + arr_info[1];
+        let arr_add = arr_info[2].split('+');
+        let add = "地址:</br>" + arr_add[0] + " -- " + arr_add[1] + "</br>" + arr_add[2] + arr_add[3] +" 号";
+        dom_p_name.innerHTML = name;
+        dom_p_tel.innerHTML = tel;
+        dom_p_add.innerHTML = add;
+    }
+
+      
+    //select-all 
+    let Arealist = {};
+    function getArea(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('get','../data/abgn.json',true);
+        xhr.send();
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                let result = JSON.parse(xhr.responseText);
+                Arealist = result.list;
+                //获得小区名称并填充area option
+                let selectInner = "<option value=''>请选择小区</option>";
+                Arealist.forEach(area =>{
+                    selectInner += `<option value="${area['id']}">${area['name']}</option>`;
+                });
+                dom_input_area.innerHTML = selectInner;
+            }
+        }
+    }
+
+    //select-Area Iarea
+    let Buildlist = {};
+    function selectArea(){
+        console.log(1);
+        if(dom_input_area.value.length > 0){
+            //获得楼栋并填充build option
+            console.log(2);
+            Arealist.forEach(area =>{                
+                if(area['id'] == dom_input_area.value){
+                    Buildlist = area.list;
+                    let selectInner = "<option value=''>请选择楼栋</option>"
+                    Buildlist.forEach(build =>{
+                        selectInner += `<option value="${build['id']}">${build['name']}</option>`;
+                    })                    
+                    dom_input_build.innerHTML = selectInner;
+                }
+            })
+        }
+        else{
+            dom_input_build.value = "";
+            dom_input_build.innerHTML = "<option value=''>请选择楼栋</option>";
+            Buildlist = {};
+            dom_input_group.value = "";
+            dom_input_group.innerHTML = "<option value=''>请选择单元</option>";
+            Grouplist = {};
+        }
+    }
+
+    //select-Buile Ibuild
+    let Grouplist = {};
+    function selectBuild(){
+        if(dom_input_build.value.length > 0){
+            //获得单元并填充group option
+            Buildlist.forEach(build =>{                
+                if(build['id'] == dom_input_build.value){
+                    Grouplist = build.list;
+                    let selectInner = "<option value=''>请选择单元</option>"
+                    Grouplist.forEach(group =>{
+                        selectInner += `<option value="${group['id']}">${group['name']}</option>`;
+                    })                    
+                    dom_input_group.innerHTML = selectInner;
+                }
+            })
+        }
+        else{
+            dom_input_group.value = "";
+            dom_input_group.innerHTML = "<option value=''>请选择单元</option>";
+            Grouplist = {};
+        }
+    }
+</script>
+</html>

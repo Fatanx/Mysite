@@ -47,7 +47,7 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });
   }
   else{
-    res.render('jump');
+    res.render('jump',{data:"欢迎到来"});
   };
 });
 

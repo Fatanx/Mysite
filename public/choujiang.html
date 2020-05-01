@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./stylesheets/choujiang.css">
+    <title></title>
+  </head>
+  <body>
+    <div class="cj box">
+      <h1>抽奖</h1>
+      <button type="button" name="button" onclick="jump_reg()">注册</button>
+      <br>
+      <button type="button" name="button" onclick="jump_cj()">摇号</button>
+      <br>
+      <button type="button" name="button" onclick="jump_gl()">管理</button>
+    </div>
+  </body>
+  <script type="text/javascript">
+    function jump_reg(){
+      document.location = "./choujiang/cj_reg.html";
+    }
+    function jump_cj(){
+      document.location = "./choujiang/cj_cj.html";
+      }
+    function jump_gl(){
+      document.location = "./choujiang/cj_gl.html";
+        }
+  </script>
+</html>

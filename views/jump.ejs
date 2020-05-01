@@ -4,11 +4,19 @@
     <meta charset="utf-8">
     <title></title>
   </head>
-  <body onload=load()>
-    你已成功登陆!
+  <body onload=load() style="text-align: center;line-height: 450px;">
+    你已成功登陆!<span class="last_time"></span>秒后跳转主页.
     <script type="text/javascript">
       function load(){
-        window.location.replace("../album.html");
+        let wait_time = 3;
+        setInterval(function (){
+          if(wait_time != -1){
+            document.getElementsByClassName("last_time")[0].innerHTML = wait_time--;
+          }
+          else{
+            window.location.replace("../album.html");
+          }
+        }, 1000);
       }
     </script>
   </body>

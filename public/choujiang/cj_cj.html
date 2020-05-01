@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../stylesheets/choujiang.css">
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <style media="screen">
+ 
+    input,button,p {
+        margin:10px;
+    }
+    p{
+      color: red;
+    }
+    </style>
+    <title></title>
+  </head>
+  <body>
+    <div class="box">
+      <h1></h1>
+      <button type="button" name="button" onclick="cj()">点击一下，开始抽号</button>
+      <h2></h2>
+
+    </div>
+  </body>
+  <script type="text/javascript">
+     window.onload=function(){
+      $.get("/reg1/checklogin",res=>{
+        if(res.msg == "jump"){
+          window.alert("还未注册，请先注册")
+          document.location = "./cj_reg.html" ;
+        }
+        else{console.log(res.msg);}
+      })
+    }
+
+
+
+    function cj(){
+      $.get("/reg1/cjj",function(res){
+        let test = res.msg;
+        console.log(res);
+        window.alert("号码已经生成，点击管理查看！")
+        document.location = "../choujiang.html";
+      });
+    }
+  </script>
+</html>

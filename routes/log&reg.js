@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
+mongoose.connect('mongodb://fatan.xyz/test', {useNewUrlParser: true});
 mongoose.Promise = Promise;
 
 
@@ -31,7 +31,6 @@ router.post('/reg',function(req,res,next){
     usermail:req.body["regmail"],
   });
   user.save();
-  console.log("save completed");
   res.send("save completed");
 });
 
