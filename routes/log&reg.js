@@ -30,8 +30,16 @@ router.post('/reg',function(req,res,next){
     userpassword:req.body["regpassword"],
     usermail:req.body["regmail"],
   });
-  user.save();
-  res.send("save completed");
+  user.save((err,msg)=>{
+    if(err) {
+      console.log(err);
+      res.send(err);
+    }
+    else{
+      console.log(msg);
+      res.send("save completed");
+    }
+  });
 });
 
 

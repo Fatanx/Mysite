@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 开发环境版本，包含了有帮助的命令行警告 -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
     <link rel='stylesheet' href='/stylesheets/MySite.css' />
     <title>MySite</title>
 </head>
@@ -13,18 +14,20 @@
         <img src="./images/51banner.jpg"/>
         <div class="nav"><ul>this is nav</ul></div>
     </div>
-    <div class="container" id= "container">
+    <div class="container" id= "container" >
         <div class = "center col">
+          <div id="articles">
             <articles
                 v-for="item in articles"
-                v-bind:article = "item"
+                v-bind:aaa = "item"
             ></articles>
-            <ul>
-                <pageNO
-                    v-for="page in pages"
-                    v-bind:pageNum = "page"
-                ></pageNO>
-            </ul>
+          </div>
+          <ul id="pageNumList">
+            <pages
+                v-for="item in pageNum"
+                v-bind:page = "item"
+            ></pages>
+          </ul>
         </div>
         <div class = "left col">this is left</br>123</div>
         <div class = "right col">this is right</div>
@@ -35,78 +38,102 @@
     </div>
 </body>
 <script>
-    Vue.component('articles', {
-        props:["article"],
-        template: 
-                "<div class = 'article'>\
-                    <h1 class ='title'>{{article.title}}</h1>\
-                    <p class = 'author'>作者:{{article.author}}</p>\
-                    <p class = 'date'>{{article.date}}</p>\
-                    </br>\
-                    <span class = 'content' v-html ='article.content'></span>\
-                </div>"
-    })
+    // $(document).ready(function(){
+    //   $.post('/article/getall',{page:1,limit:5},function(res){
+    //     console.log(res);
+    //   });
+    // });
 
-    Vue.component("pageNO",{
-        props:["pageNum"],
+
+    Vue.component('articles', {
+        props:["aaa"],
         template:
-            "<li class='pageID' >{{pageNum}}</li>"
-    })
+                "<div class = 'article'>\
+                    <h1 class ='title'>{{aaa.title}}</h1>\
+                    <p class = 'author'>作者:{{aaa.author}}</p>\
+                    <p class = 'date'>{{aaa.date}}</p>\
+                    </br>\
+                    <span class = 'content' v-html ='aaa.content'></span>\
+                </div>",
+    });
+    Vue.component('pages', {
+        props:["page"],
+        template: "<li>{{page.text}}</li>"
+    });
 
     var app = new Vue({
         el:"#container",
         data:{
-            articles:[{
-                title:"第一篇文章",
-                date:"2020-4-30",
-                author:"fatan",
-                content:"&#12288;&#12288;这是第一篇文章,测试所用,并非从数据库导入,为初始化数据"
+            articles:[],
+            // [{
+            //     title:"第一篇文章",
+            //     date:"2020-4-30",
+            //     author:"fatan",
+            //     content:"&#12288;&#12288;这是第一篇文章,测试所用,并非从数据库导入,为初始化数据"
+            // },{
+            //     title:"第二篇文章",
+            //     date:"2020-4-30",
+            //     author:"fatan",
+            //     content:"&#12288;&#12288;这是第二篇文章,测试所用,并非从数据库导入,为初始化数据.这是第二篇文章,测试所用,并非从数据库导入,为初始化数据.这是第二篇文章,测试所用,并非从数据库导入,为初始化数据.这是第二篇文章,测试所用,并非从数据库导入,为初始化数据.这是第二篇文章,测试所用,并非从数据库导入,为初始化数据.这是第二篇文章,测试所用,并非从数据库导入,为初始化数据."
+            // },{
+            //     title:"再别康桥",
+            //     author:"徐志摩",
+            //     date:"2020-4-30",
+            //     content:"轻轻的我走了，<br/>\
+            //     正如我轻轻的来；<br/>\
+            //     我轻轻的招手，<br/>\
+            //     作别西天的云彩。<br/>\
+            //     <br/>\
+            //     那河畔的金柳，<br/>\
+            //     是夕阳中的新娘；<br/>\
+            //     波光里的艳影，<br/>\
+            //     在我的心头荡漾。<br/>\
+            //     软泥上的青荇，<br/>\
+            //     油油的在水底招摇；<br/>\
+            //     在康河的柔波里，<br/>\
+            //     我甘心做一条水草！<br/>\
+            //     <br/>\
+            //     那榆荫下的一潭，<br/>\
+            //     不是清泉，<br/>\
+            //     是天上虹；<br/>\
+            //     揉碎在浮藻间，<br/>\
+            //     沉淀着彩虹似的梦。<br/>\
+            //     梦？撑一支长篙，<br/>\
+            //     向青草更青处漫溯；<br/>\
+            //     满载一船星辉，<br/>\
+            //     在星辉斑斓里放歌。<br/>\
+            //     但我不能放歌，<br/>\
+            //     悄悄是别离的笙箫；<br/>\
+            //     夏虫也为我沉默，<br/>\
+            //     沉默是今晚的康桥！<br/>\
+            //     <br/>\
+            //     悄悄的我走了，<br/>\
+            //     正如我悄悄的来；<br/>\
+            //     我挥一挥衣袖，<br/>\
+            //     不带走一片云彩。"
+            // }],
+            pageNum:[{
+              id:0,
+              text:"上一页"
             },{
-                title:"第二篇文章",
-                date:"2020-4-30",
-                author:"fatan",
-                content:"&#12288;&#12288;这是第二篇文章,测试所用,并非从数据库导入,为初始化数据.这是第二篇文章,测试所用,并非从数据库导入,为初始化数据.这是第二篇文章,测试所用,并非从数据库导入,为初始化数据.这是第二篇文章,测试所用,并非从数据库导入,为初始化数据.这是第二篇文章,测试所用,并非从数据库导入,为初始化数据.这是第二篇文章,测试所用,并非从数据库导入,为初始化数据."
+              id:1,
+              text:"1"
             },{
-                title:"再别康桥",
-                author:"徐志摩",
-                date:"2020-4-30",
-                content:"轻轻的我走了，<br/>\
-                正如我轻轻的来；<br/>\
-                我轻轻的招手，<br/>\
-                作别西天的云彩。<br/>\
-                <br/>\
-                那河畔的金柳，<br/>\
-                是夕阳中的新娘；<br/>\
-                波光里的艳影，<br/>\
-                在我的心头荡漾。<br/>\
-                软泥上的青荇，<br/>\
-                油油的在水底招摇；<br/>\
-                在康河的柔波里，<br/>\
-                我甘心做一条水草！<br/>\
-                <br/>\
-                那榆荫下的一潭，<br/>\
-                不是清泉，<br/>\
-                是天上虹；<br/>\
-                揉碎在浮藻间，<br/>\
-                沉淀着彩虹似的梦。<br/>\
-                梦？撑一支长篙，<br/>\
-                向青草更青处漫溯；<br/>\
-                满载一船星辉，<br/>\
-                在星辉斑斓里放歌。<br/>\
-                但我不能放歌，<br/>\
-                悄悄是别离的笙箫；<br/>\
-                夏虫也为我沉默，<br/>\
-                沉默是今晚的康桥！<br/>\
-                <br/>\
-                悄悄的我走了，<br/>\
-                正如我悄悄的来；<br/>\
-                我挥一挥衣袖，<br/>\
-                不带走一片云彩。"
-            }],
-            pages:[1,2,3,4,5]
+              id:-1,
+              text:"下一页"
+            }]
+        },
+        methods:{
+          greet:function(){
+            var thiss = this;
+            this.articles = $.post('/article/getall',{page:1,limit:5},function(res){
+              thiss.articles = res.msg;
+            });
+          }
+        },
+        mounted:function(){
+          this.greet()
         }
     })
-
-    
 </script>
 </html>

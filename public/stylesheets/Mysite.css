@@ -10,7 +10,7 @@ body{
 .header{
     font-size: 0;
     width:99.6%;
-    
+
 }
 .header>img{
     width:inherit;
@@ -74,6 +74,24 @@ body{
     padding:5px;
 }
 
+.center li{
+  font-size: 15px;
+  background-color: #eee;
+  color:black;
+  line-height: 20px;
+  border-radius: 3px;
+  border:1px white solid;
+  height:20px;
+  padding: 0 10px 0 10px;
+  padding: 2px;
+  display:inline-block;
+  margin:  0 5px 0 5px;
+  transition:background 0.5s,color 0.5s;
+}
+.center li:hover {
+  background-color:#39f;
+  color: white;
+}
 .left{
     width:200px;
     height: 100px;
