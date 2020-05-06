@@ -5,10 +5,110 @@
     <title>添加文章</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <link rel='stylesheet' href='./NewArt.css'>
   </head>
   <body>
-    <div class="">
+    <div class = "header">
+      <img src="../images/51banner.jpg"/>
+      <div class="nav"><ul>this is nav</ul></div>
+  </div>
+  <div class="container" id= "container" >
+      <div class = "center col">
+        <div class = "title"  id="title"> 
+          <input type="text" placeholder="标题" v-model = "title">
+        </div>
+        <div class="toolBar" id="toolBar">
+          <a title="添加图片" v-show="isActive">IMG</a>
+          <a title="添加链接" v-show="isActive">URL</a>
+        </div>
+        <div class="textareaBox">
+          <textarea1  
+            v-for="item in inputList"
+            v-bind:bbb = "item"
+            @onfocus.native="text_focus" 
+            @blur="text_blur"
+            @click = "text_focus()"
+          ></textarea1>
 
-    </div>
+        </div>
+        <div class='textareaTail' id = "textareaTail">
+          <button  id="comfirm">确认提交</button>
+        </div>
+      </div>
+      <div class = "left col">this is left</div>
+      <div class = "right col">this is right</div>
+  </div>
+  <div class = "footer">
+      <p> 鄂ICP备19026213号-1</p>
+      <p><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42018502004261" >鄂公网安备 42018502004261号</a></p>
+  </div>
   </body>
+  <script>
+    function textareaChange(ele){
+      ele.scrollHeight = 0;
+      ele.style.height = 0;
+      ele.style.height = ele.scrollHeight + 'px';
+    }
+
+
+    Vue.component("textarea1",{
+      props:['bbb'],
+      template:'<textarea autoHeight="true" class="testttt">{{bbb.name}}</textarea>'
+        // '<textarea autoHeight="true" class = "testttt">{{oneInput.control}}</textarea>'
+    });
+
+ 
+
+
+    var app = new Vue({
+      el:"#container",
+      data:{
+        isActive:true,
+        tools:[{
+            name:'addImg',
+            methods:'this.addImg',
+            sign:'IMG'
+          },
+          {
+            name:'addURL',
+            methods:'this.addURL',
+            sign:'URL'
+          }
+        ],
+        inputList:[{
+          name:"1",
+          control:"textarea"
+        }],
+        title:''
+      },
+      methods:{
+        addImg:function(){
+          alert("addimg");
+        },
+        addURL:function(){
+          alert("addUrl");
+        },
+        imgChage:function(){
+
+        },
+        URL:function(){
+
+        },
+        comfirm:function(){
+
+        },
+
+        text_focus:function(){
+          this.isActive = true;
+          console.log(123);
+          
+        },
+        text_blur:function(){
+          this.isActive = false;
+          console.log(321);
+          
+        }
+      }
+    });
+  </script>
 </html>

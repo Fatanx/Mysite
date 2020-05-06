@@ -38,13 +38,6 @@
     </div>
 </body>
 <script>
-    // $(document).ready(function(){
-    //   $.post('/article/getall',{page:1,limit:5},function(res){
-    //     console.log(res);
-    //   });
-    // });
-
-
     Vue.component('articles', {
         props:["aaa"],
         template:
@@ -81,6 +74,8 @@
             var thiss = this;
             this.articles = $.post('/article/getall',{page:1,limit:5},function(res){
               thiss.articles = res.msg;
+              console.log(thiss.articles);
+              
             });
           }
         },
