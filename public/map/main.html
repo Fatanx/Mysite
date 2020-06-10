@@ -1,275 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
-    <script src="https://webapi.amap.com/maps?v=1.4.15&key=93c9ccfbf459daf45c035da702e15217&plugin=AMap.Driving"></script>
+    <script
+        src="https://webapi.amap.com/maps?v=1.4.15&key=93c9ccfbf459daf45c035da702e15217&plugin=AMap.Driving"></script>
     <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
-    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Map</title>
 </head>
-<style>
-    *{
-        list-style: none;
-        padding:0;
-        margin: 0;
-        font-size: 0;
-    }
-    html,body{
-        height: 100%;
-        width:100%;
-        background-color: #09e;
-    }
-    .banner{
-        height:4.5%;
-        width:100%;
-        border-bottom: solid white 2px ;
-        z-index: 99;
-    }
-    ul,li,a{
-        font-size: 20px;
-        z-index: 999;
-    }
-    .clear{clear: both;}  /* 清除浮动 */
-    a{text-decoration-line: none;}   /* 去掉默认a标签的下划线 */
-    nav .level>li{
-        float: left;
-        width: 16.66%;
-        text-align: center;
-        background: #09e;
-        color:white;
-        padding: 3px 0;
-        font-size: 16px;
-    }
-    nav .level>li a{
-        color: white; 
-    }
-    nav .level>li:hover{
-        background: #09e;
-        color: white;
-    }   /* 设置鼠标滑过后的样式 */
-/* 先使二级菜单的内容隐藏 */
-    nav .level>li:hover .two li{
-        display: block;
-        font-size: 12px;
-    }   /* 鼠标滑过一级菜单后的显示二级菜单 */
-    nav .level>li{
-        transition: .4s;
-        position: relative;
-    }  /* 颜色添加过渡时间     未处理兼容性*/
-    nav .two li{
-        display:none;
-        padding: 5px 0;
-        transition: .4s;
-        cursor: pointer;
-        border-top: white 1px solid;
-    }
-    nav .two li:hover{
-        background: #969;
-        z-index: 999;
-    }
-
-
-    #container{
-        height:95%;
-        width:100%;
-        z-index: 0;
-        position: absolute;
-    }
-    #panel{
-        position: fixed;
-        background-color: white;
-        max-height: 90%;
-        overflow-y: auto;
-        top: 10px;
-        right: 10px;
-        width: 280px;
-    }
-    #panel .amap-call {
-        background-color: #009cf9;
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
-    }
-    #panel .amap-lib-walking {
-        border-bottom-left-radius: 4px;
-        border-bottom-right-radius: 4px;
-        overflow: hidden;
-    }
-    .info2{
-        width: auto;
-        min-height: 15px;
-        position: absolute;
-        right:10px;
-        top:10px;
-        display:inline-block;
-        color: black;
-        text-align: right;
-    }
-    .info2>div{
-        float: right;
-        font-size: 15px;
-        margin:1px 5px;
-        color: white;
-    }
-    #sStatus{
-        width:auto;
-        height:10px;
-    }
-
-    .native-toast-shown{
-        font-size: 10px;
-    }
-</style>
 
 <body>
     <div class="banner">
         <nav>
-            <ul class = "level">
-                <li>   
+            <ul class="level" id="level">
+                <li>
                     <a href="#">路名</a>
-                    <ul class="two">
-                        <li onclick='selectRoad("九峰一路")'>九峰一路</li>
-                        <li onclick='selectRoad("孟新路")'>孟新路</li>
-                        <li onclick='selectRoad("花山大道")'>花山大道</li>
+                    <ul class="two" >
+                        <roadli v-for="road in roadlist" v-bind:road="road" v-on:click.native="vSelectRoad"></roadli>
+                        <li class="style_addSome road"  @click="addWhat($event)">添加一个路</li>
                     </ul>
                 </li>
                 <li>
-                    <a href="">路口</a>
+                    <a href="#">路口</a>
                     <ul class="two">
-                        <li onclick='selectPoint("九峰一路与孟新路")'>九峰一路与孟新路</li>
-                        <li onclick='selectPoint("九峰一路与花山大道")'>九峰一路与花山大道</li>
+                        <!-- <li onclick='selectPoint("九峰一路与孟新路")'>九峰一路与孟新路</li>
+                        <li onclick='selectPoint("九峰一路与花山大道")'>九峰一路与花山大道</li> -->
+                        <crossli v-for="cross in crossList" v-bind:cross="cross" v-on:click.native="vSelectCross"></crossli>
+                        <li class="style_addSome cross"  @click="addWhat($event)">添加一个路口</li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">路段</a>
+                    <ul class="two">
+                        <C2Cli v-for="C2C in C2CList" v-bind:C2C="C2C" @click.native="vSelectC2C"></C2Cli>
+                        <li class="style_addSome C2C"   @click="addWhat($event)">添加一个路段</li>
                     </ul>
                 </li>
             </ul>
         </nav>
-    </div>    
-    <div class = "info2">
-        <div id="dDistance"></div>
-        <div id = "sStatus">点击地图获取经纬度</div>
     </div>
-    <div id="container">   </div>
+    <div class="info2">
+        <div id="dDistance"></div>
+        <div id="sStatus">点击地图获取经纬度</div>
+    </div>
+    <div id="container"> </div>
     <div id="panel" style="display:none"></div>
-
+    <div id="addSpan">
+        <addSome
+            v-for="control in controlList"
+            v-bind:control="control"
+        ></addSome>
+    </div>
 </body>
-<script>
-    var roadList = [{
-        startAndEnd:[[114.47983503,30.49023975],[114.54173505,30.50620491]],
-        passPoint:[[114.53092575,30.5008804]],
-        direct:1,
-        id:'42060000000001001',
-        name:'九峰一路'
-    },{
-        startAndEnd:[[114.47860658,30.50556709],[114.48593974,30.49249555]],
-        passPoint:[],
-        direct:2,
-        id:'42060000000001002',
-        name:'孟新路'
-    },{
-        startAndEnd:[[114.50291812,30.49003173],[114.570086,30.5600622]],
-        passPoint:[[114.54726577,30.57501828]],
-        direct:2,
-        id:'42060000000001002',
-        name:'花山大道'
-    }]
-    var crossList =[{
-        name:"九峰一路与孟新路",
-        position:[114.48597,30.492405]
-    },{
-        name:"九峰一路与花山大道",
-        position:[114.502925,30.492791]
-    }]
-    var map = new AMap.Map('container', {
-        resizeEnable: true, //是否监控地图容器尺寸变化
-        zoom:11, //初始化地图层级
-        center: [114.285564,30.543027], //初始化地图中心点
-        mapStyle:'amap://styles/394e35f56d01465d3f793b8fcaeed0e9'
-    });
-    var driving = new AMap.Driving({
-                map: map,
-                panel: "panel",
-                policy:AMap.DrivingPolicy.LEAST_DISTANCE
-            });
-    var selectRoad = function(roadName){
-        removeMarker();
-        let road ;
-        roadList.forEach(function(oneRoad){
-            if(roadName == oneRoad.name){
-                road = oneRoad;
-            }
-        })
-        let startPoint,endPoint;
-        let wayPoints=[];
-        startPoint = new AMap.LngLat(road.startAndEnd[0][0],road.startAndEnd[0][1]);
-        endPoint = new AMap.LngLat(road.startAndEnd[1][0],road.startAndEnd[1][1]);
-        if( road.passPoint){
-            road.passPoint.forEach(function(point){
-                wayPoints.push(new AMap.LngLat(point[0],point[1]));
-            })
-        }
-        driving.search(startPoint,endPoint,{
-                waypoints:wayPoints
-        }, function(status, result) {
-        // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
-            log.success("正在查询请稍后");
-            if (status === 'complete') {
-                log.success('路线查询完成');
-                getDistance(/\(.*\)/.exec(driving.M._currentRouteTitle.outerText)[0]);
-            } else {
-                log.error('路线查询失败：' + result)
-            }
-        });
-    }
+<script src="main.js"></script>
+<script src="vMain.js"></script>
 
-    map.on( 'click',  function (e) {
-        AMap.plugin("AMap.Geocoder",function(){
-            inglatlput.innerHTML = "经纬度: " + e.lnglat.toString();
-            
-        })
-    });
-    var $=function(elementid){
-        return document.getElementById(elementid);
-    }
-    var  inglatlput = $("sStatus");
-
-    var markers=[];
-    function selectPoint(name){
-        removeMarker();
-        removeDriving();
-        removeDistance();
-        let position ;
-        crossList.forEach(function(cross){
-            if(cross.name == name) position = cross;
-        })
-        var marker = new AMap.Marker({
-            position: new AMap.LngLat(position.position[0],position.position[1]),
-            // 将 html 传给 content
-            // content: "路口",
-            // 以 icon 的 [center bottom] 为原点
-            offset: new AMap.Pixel(-13, -30)
-        });
-        marker.setTitle(position.name);
-        map.add(marker);
-        markers.push(marker);
-        map.setCenter([position.position[0],position.position[1]]);
-        inglatlput.innerHTML = "经纬度: " + position.position[0]+','+ position.position[1];
-    }
-    function removeMarker(){
-        markers.forEach(function(marker){
-            map.remove(marker);
-        })
-    }
-    function removeDriving(){
-        driving.clear();
-    }
-    function removeDistance(){
-        let dom_distance = document.getElementById('dDistance');
-        dom_distance.innerText =''; 
-    }
-    function getDistance(text){
-        let dom_distance = document.getElementById('dDistance');
-        dom_distance.innerText = '道路长度:' + text;
-    }
-
-</script>
 </html>

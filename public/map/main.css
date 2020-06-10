@@ -1,0 +1,129 @@
+*{
+    list-style: none;
+    padding:0;
+    margin: 0;
+    font-size: 0;
+}
+html,body{
+    height: 100%;
+    width:100%;
+    background-color: #09e;
+}
+.style_addSome{
+    background-color: black;
+}
+.style_addSome:hover{
+    background-color: gray;
+}
+.banner{
+    height:4.5%;
+    width:100%;
+    border-bottom: solid white 2px ;
+    z-index: 99;
+}
+ul,li,a{
+    font-size: 20px;
+    z-index: 999;
+}
+.clear{clear: both;}  /* 清除浮动 */
+a{text-decoration-line: none;}   /* 去掉默认a标签的下划线 */
+nav .level>li{
+    float: left;
+    width: 16.66%;
+    text-align: center;
+    background: #09e;
+    color:white;
+    padding: 3px 0;
+    font-size: 16px;
+}
+nav .level>li a{
+    color: white; 
+}
+nav .level>li:hover{
+    background: #09e;
+    color: white;
+}   /* 设置鼠标滑过后的样式 */
+/* 先使二级菜单的内容隐藏 */
+nav .level>li:hover .two li{
+    display: block;
+    font-size: 12px;
+}   /* 鼠标滑过一级菜单后的显示二级菜单 */
+nav .level>li{
+    transition: .4s;
+    position: relative;
+}  /* 颜色添加过渡时间     未处理兼容性*/
+nav .two li{
+    display:none;
+    padding: 5px 0;
+    transition: .4s;
+    cursor: pointer;
+    border-top: white 1px solid;
+}
+nav .two li:hover{
+    background: #969;
+    z-index: 999;
+}
+
+
+#container{
+    height:95%;
+    width:100%;
+    z-index: 0;
+    position: absolute;
+}
+#panel{
+    position: fixed;
+    background-color: white;
+    max-height: 90%;
+    overflow-y: auto;
+    top: 10px;
+    right: 10px;
+    width: 280px;
+}
+#panel .amap-call {
+    background-color: #009cf9;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+#panel .amap-lib-walking {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    overflow: hidden;
+}
+.info2{
+    width: auto;
+    min-height: 15px;
+    position: absolute;
+    right:10px;
+    top:10px;
+    display:inline-block;
+    color: black;
+    text-align: right;
+}
+.info2>div{
+    float: right;
+    font-size: 15px;
+    margin:1px 5px;
+    color: white;
+}
+#sStatus{
+    width:auto;
+    height:10px;
+}
+
+.native-toast-shown{
+    font-size: 10px;
+}
+
+#addSpan{
+    min-height: 500px;
+    width:25%;
+    min-width:320px;
+    position: relative;
+    margin-left:5%;
+    margin-top: 10%;
+    background-color: white;
+    border:solid 1px gray;
+    border-radius: 5px;
+
+}
