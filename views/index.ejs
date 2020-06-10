@@ -122,8 +122,8 @@
           $.post("send_key/send",{email:mailadd},function(res){
             if(res.msg == 'success!'){
               msgbox_alert("验证码发送成功,请在邮箱查收!")
+              codekey = res.key;
             }
-            codekey = res.key;
           })
         //将来添加加密
         }
@@ -133,17 +133,27 @@
       }
 
       function send_key_byphone(event){
-        let mailadd = $(".regmail").eq(0).val();
-        let ex = /^1[0-9]{10}/;
-        let ex_true = ex.test(mailadd)&&mailadd.length == 11;        
-        if (ex_true){
-          mailadd = "+86" + mailadd;
-          $.post("/ssms",{PhoneNO:mailadd},res=>{
-            msgbox_alert("验证码已发送给手机")
-          })
+        if($(".regpassword").eq(0).val && $(".regname").eq(0).val){
+          let mailadd = $(".regmail").eq(0).val();
+          let ex = /^1[0-9]{10}/;
+          let ex_true = ex.test(mailadd)&&mailadd.length == 11;        
+          if (ex_true){
+            mailadd = "+86" + mailadd;
+            $.post("/ssms",{PhoneNO:mailadd},res=>{
+              if(res.msg == 'success!'){
+                msgbox_alert("验证码已发送给手机!")
+                codekey = res.key;
+                console.log(codekey);
+                
+              }
+            })
+          }
+          else {
+            msgbox_alert("请输入正确的手机号码") ;
+          }    
         }
-        else {
-          msgbox_alert("请输入正确的手机号码") ;
+        else{
+          msgbox_alert("请先输入用户名以及密码!")
         }
       }
 
@@ -154,27 +164,32 @@
       }
 
       function go_logup(event){
-        var regname = $(".regname").eq(0).val();
-        var regpassword = md5($(".regpassword").eq(0).val());
-        var regmail = $(".regmail").eq(0).val();
-        var iskey = ($("input.input-key").eq(0).val()) &&(codekey ==  md5($("input.input-key").eq(0).val()));
-        if(regname && regpassword ){
-          if(iskey){
-          //验证正确
-            $.post("/login/reg",{regname:regname,regpassword:regpassword,regmail:regmail},res=>{
-              if(res=="save completed"){
-                document.location="./album.html";
-              }
-            })
+        if(codekey != ''){
+          var regname = $(".regname").eq(0).val();
+          var regpassword = md5($(".regpassword").eq(0).val());
+          var regmail = $(".regmail").eq(0).val();
+          var iskey = ($("input.input-key").eq(0).val()) &&(codekey ==  md5($("input.input-key").eq(0).val()));
+          if(regname && regpassword ){
+            if(iskey){
+            //验证正确
+              $.post("/login/reg",{regname:regname,regpassword:regpassword,regmail:regmail},res=>{
+                if(res=="save completed"){
+                  document.location="./album.html";
+                }
+              })
+            }
+            else{
+              //key验证失败
+              msgbox_alert("验证码不正确");
+            }
           }
           else{
-            //key验证失败
-            msgbox_alert("验证码不正确");
+            //用户名密码验证失败
+            msgbox_alert("用户名密码不合要求");
           }
         }
         else{
-          //用户名密码验证失败
-          msgbox_alert("用户名密码不合要求");
+          msgbox_alert("请先获取验证码并输入");
         }
       }
 

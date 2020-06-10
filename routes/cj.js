@@ -105,10 +105,7 @@ router.post("/oppass",function(req,res){
 
 router.post("/delscore",function(req,res){
   let key = req.body.key;
-  // delete namelist[key];
-  namelist[key].pop();
-  console.log(namelist);
-  
+  namelist[key].pop();  
   res.send({msg:"success!",result:true});
 })
 

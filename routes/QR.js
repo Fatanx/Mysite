@@ -208,7 +208,8 @@ function readAddList(){
         if (err) {
             //如果去读出错，抛出错误后不会再执行后面的代码
             console.log(err);
-        } 
+            
+        }
         else{
         //读取数据放在data字符串 转化成
         addresslist = JSON.parse(data);

@@ -42,6 +42,7 @@ app.use('/reg1',require("./routes/cj"));//抽奖程序
 app.use('/QR',require("./routes/QR"));
 app.use('/ssms',require("./routes/sms/SendSms.js"));
 app.use('/article',require("./routes/articleFiles/MongoR&W.js"));
+app.use('/webService',require("./routes/webService.js"))
 
 
 // catch 404 and forward to error handler
@@ -61,3 +62,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+

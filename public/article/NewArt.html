@@ -18,8 +18,8 @@
           <input type="text" placeholder="标题" v-model = "title">
         </div>
         <div class="toolBar" id="toolBar">
-          <a title="添加图片" v-show="isActive">IMG</a>
-          <a title="添加链接" v-show="isActive">URL</a>
+          <a title="添加图片" v-show="isActive" v-on:click="addImg">IMG</a>
+          <a title="添加链接" v-show="isActive" v-on:click="addURL">URL</a>
         </div>
         <div class="textareaBox">
           <textarea1  
@@ -29,7 +29,14 @@
             @blur="text_blur"
             @click = "text_focus()"
           ></textarea1>
-
+          <span class="imgSpan">
+            <div class="imgright">
+              <p class = "rightTitle">请输入图片说明</P>
+              <a class = "closeImg" title="取消这个插入图片">  </a>
+              <textarea class="rightContent" autoHeight="true" value="1">2</textarea>
+            </div>
+            <div class="imgleft"><img src="123.jpg" alt="点击上传图片"></div>
+          </span>
         </div>
         <div class='textareaTail' id = "textareaTail">
           <button  id="comfirm">确认提交</button>
@@ -53,11 +60,13 @@
 
     Vue.component("textarea1",{
       props:['bbb'],
-      template:'<textarea autoHeight="true" class="testttt">{{bbb.name}}</textarea>'
-        // '<textarea autoHeight="true" class = "testttt">{{oneInput.control}}</textarea>'
+      template:'<span v-html ="bbb.construct_left + bbb.content + bbb.construct_right""></span>'
+      // '<textarea autoHeight="true" class="testttt" v-if:bbb.control>{{bbb.name}}</textarea>'
     });
 
- 
+    Vue.component("imgbox",{
+      template:'<img src="{{}}"></img>'
+    })
 
 
     var app = new Vue({
@@ -76,8 +85,17 @@
           }
         ],
         inputList:[{
-          name:"1",
-          control:"textarea"
+          name:"name",
+          control:"textarea",
+          construct_left:'<textarea autoHeight="true" class = "content">',
+          construct_right:"</textarea>",
+          content:"这是一个简单的文字区域"
+        },{
+          name:"name",
+          control:"img",
+          construct_left:'<img src=\"',
+          construct_right:'\"></img><p>图片说明</p></br><input type="text" class = "imginfo" mutiple="true"></input>',
+          content:"不存在的图片.jpg"
         }],
         title:''
       },
