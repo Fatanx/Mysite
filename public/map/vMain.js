@@ -8,6 +8,65 @@ Vue.component("crossli", {
     template: '<li>{{cross.name}}</li>'
 });
 
+Vue.component("C2Cli",{
+    props:["C2C"],
+    template:'<li>{{C2C.name}}</li>'
+});
+
+Vue.component("addroad", {
+    template: '\
+    <div class="addSpan" >\
+    <h6>添加路名</h6>\
+    <p>添加起点</p>\
+    <input></input></br>\
+    <p>添加终点</p>\
+    <input type="text"></input>\
+    <p>请输入该路的编码ID</p>\
+    <input></input>\
+    <p>请依次从起点选择道路途径点,如无需要,可以不选</p>\
+    <input></input>\
+    <input></input>\
+    <input></input>\
+    <input></input>\
+    <input></input>\
+    <input></input>\
+    <input></input>\
+    <input></input>\
+    <button></button>\
+    </div>\
+    '
+});
+Vue.component("addcross",{
+    template: '\
+    <div class="addSpan" >\
+    <h6>添加路名</h6>\
+    <p>选择东西走向路</p>\
+    <input></input></br>\
+    <p>选择南北走向路</p>\
+    <input type="text"></input>\
+    <p>请输入该路口的编码ID</p>\
+    <input></input>\
+    <p>请选择该路口的经纬度</p>\
+    <input></input>\
+    <button></button>\
+    </div>\
+    '
+});
+Vue.component("addc2c",{
+    template: '\
+    <div class="addSpan" >\
+    <h6>添加路段</h6>\
+    <p>选择起点路口</p>\
+    <input></input></br>\
+    <p>选择终点路口</p>\
+    <input type="text"></input>\
+    <p>请输入该路段的编码ID</p>\
+    <input></input>\
+    <button onclick="showAndClose()"></button>\
+    </div>\
+    '
+});
+
 var app = new Vue({
     el: "#level",
     data: {
@@ -51,18 +110,11 @@ var app = new Vue({
             position: [114.502925, 30.492791]
         }],
         C2CList: [],
-        controlList: [
-            {
-                name:'road',
-                controls:[]
-            },{
-                name:'cross',
-                controls:[]
-            },{
-                name:'C2C',
-                controls:[]
-            }
-        ]
+        vForms:[],
+        Vshow:false,
+        Rshow:false,
+        Cshow:false,
+        C2show:false
     },
     methods: {
         vSelectRoad: function (event) {
@@ -113,18 +165,20 @@ var app = new Vue({
             marker.setTitle(crossSpan.name);
             map.add(marker);
             markers.push(marker);
-            map.setZoomAndCenter(15,[crossSpan.position[0], crossSpan.position[1]]);
+            map.setZoomAndCenter(15, [crossSpan.position[0], crossSpan.position[1]]);
             inglatlput.innerHTML = "经纬度: " + crossSpan.position[0] + ',' + crossSpan.position[1];
         },
-        addWhat:function(event){
-            let selected;
-            let className = event.target.className.split(' ')[1];//获取辨别名称
-            controlList.forEach(function(selectControl){
-                if(selectControl.name == className){
-                    selected == selectControl;
-                }
-                
-            })
+        vAddWhat: function (event) {
+            let className = event.target.className.split(' ')[1]; //获取辨别名称
+            app.vShow = true;
+        },
+        addControl: function () {
+
+        },
+        showAndClose:function(){
+            console.log(123);
+            Vshow = true ;
+            app.Rshow = true;
         }
     }
 });

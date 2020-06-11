@@ -27,6 +27,9 @@ ul,li,a{
 }
 .clear{clear: both;}  /* 清除浮动 */
 a{text-decoration-line: none;}   /* 去掉默认a标签的下划线 */
+.level{
+    height:4.5%;
+}
 nav .level>li{
     float: left;
     width: 16.66%;
@@ -114,16 +117,30 @@ nav .two li:hover{
 .native-toast-shown{
     font-size: 10px;
 }
+.slide-fade-enter-active {
+    transition: all .8s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all .5s cubic-bezier(1.0, 0.8 , 0.5, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active for below version 2.1.8 */ {
+    transform: translateX(10px);
+    opacity: 0;
+}
 
-#addSpan{
+.addSpan{
     min-height: 500px;
     width:25%;
     min-width:320px;
-    position: relative;
+    position: absolute;
     margin-left:5%;
     margin-top: 10%;
     background-color: white;
     border:solid 1px gray;
     border-radius: 5px;
-
+    z-index: 999;
+}
+.addSpan button,p,span{
+    font-size: 20px;
 }

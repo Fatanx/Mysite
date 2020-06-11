@@ -20,9 +20,9 @@
             <ul class="level" id="level">
                 <li>
                     <a href="#">路名</a>
-                    <ul class="two" >
+                    <ul class="two">
                         <roadli v-for="road in roadlist" v-bind:road="road" v-on:click.native="vSelectRoad"></roadli>
-                        <li class="style_addSome road"  @click="addWhat($event)">添加一个路</li>
+                        <li class="style_addSome road" @click="showAndClose($event)">添加一个路</li>
                     </ul>
                 </li>
                 <li>
@@ -30,17 +30,29 @@
                     <ul class="two">
                         <!-- <li onclick='selectPoint("九峰一路与孟新路")'>九峰一路与孟新路</li>
                         <li onclick='selectPoint("九峰一路与花山大道")'>九峰一路与花山大道</li> -->
-                        <crossli v-for="cross in crossList" v-bind:cross="cross" v-on:click.native="vSelectCross"></crossli>
-                        <li class="style_addSome cross"  @click="addWhat($event)">添加一个路口</li>
+                        <crossli v-for="cross in crossList" v-bind:cross="cross" v-on:click.native="vSelectCross">
+                        </crossli>
+                        <li class="style_addSome cross" @click="showAndClose($event)">添加一个路口</li>
                     </ul>
                 </li>
                 <li>
                     <a href="#">路段</a>
                     <ul class="two">
                         <C2Cli v-for="C2C in C2CList" v-bind:C2C="C2C" @click.native="vSelectC2C"></C2Cli>
-                        <li class="style_addSome C2C"   @click="addWhat($event)">添加一个路段</li>
+                        <li class="style_addSome C2C" @click="showAndClose($event)">添加一个路段</li>
                     </ul>
                 </li>
+
+                <transition name="slide-fade">
+                    <div id="addSpan" v-if="Vshow">
+                        <addroad v-show:Rshow></addroad>
+                        <addcross v-show:Cshow></addcross>
+                        <addc2c v-show:C2show></addc2c>
+
+                        
+                    </div>
+                </transition>
+                <div class="clear">
             </ul>
         </nav>
     </div>
@@ -50,12 +62,7 @@
     </div>
     <div id="container"> </div>
     <div id="panel" style="display:none"></div>
-    <div id="addSpan">
-        <addSome
-            v-for="control in controlList"
-            v-bind:control="control"
-        ></addSome>
-    </div>
+
 </body>
 <script src="main.js"></script>
 <script src="vMain.js"></script>
