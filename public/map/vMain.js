@@ -32,13 +32,24 @@ Vue.component("addroad", {
     <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
     <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
     <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
-    <button class="exit"  @click.emit="vexit">退出</button>\
-    <button class="comfirm">确定</button>\
+    <button class="exit"  @click="vexit">退出</button>\
+    <button class="comfirm" @click="addnew($event)">确定</button>\
     </div>\
     ',
     methods:{
         vexit:function(){
             this.$emit('closeaddspan');
+        },
+        addnew:function(e){
+            let data={};
+            let domsInput = e.target.parentElement.getElementsByTagName('input');
+            console.log(domsInput);
+            
+            for(let i = 0; i < domsInput.length;i++){
+                data[i] = domsInput[i].value;
+            }
+            console.log(data);
+            this.$emit('addroad',data);
         }
     }
 });
@@ -68,8 +79,8 @@ Vue.component("addc2c",{
     <input type="text"></input>\
     <p>请输入该路段的编码ID</p>\
     <input></input>\
-    <button class="exit"  @click.emit="vexit">退出</button>\
-    <button class="comfirm">确定</button>\
+    <button class="exit" @click.emit="vexit">退出</button>\
+    <button class="comfirm" >确定</button>\
     </div>\
     '
 });
@@ -184,6 +195,14 @@ var app = new Vue({
             app.isShow['road']=false;
             app.isShow['cross']=false;
             app.isShow['C2C']=false;
+        },
+        addroad:function(data){
+            let newRoad;
+            newRoad.name = data.name;
+            startAndEnd
+            id
+            direct
+            passPoint
         }
     }
 });
