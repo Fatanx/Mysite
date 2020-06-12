@@ -54,7 +54,7 @@ Vue.component("addcross",{
     <input></input>\
     <p>请选择该路口的经纬度</p>\
     <input></input>\
-    <button class="exit">退出</button>\
+    <button class="exit"  @click.emit="vexit">退出</button>\
     <button class="comfirm">确定</button>\
     </div>'
 });
@@ -68,7 +68,7 @@ Vue.component("addc2c",{
     <input type="text"></input>\
     <p>请输入该路段的编码ID</p>\
     <input></input>\
-    <button @click="exit">退出</button>\
+    <button class="exit"  @click.emit="vexit">退出</button>\
     <button class="comfirm">确定</button>\
     </div>\
     '
