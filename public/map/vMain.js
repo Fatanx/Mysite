@@ -16,25 +16,31 @@ Vue.component("C2Cli",{
 Vue.component("addroad", {
     template: '\
     <div class="addSpan" >\
-    <h6>添加路名</h6>\
+    <p class="title">添加路名</p>\
     <p>添加起点</p>\
-    <input></input></br>\
+    <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
     <p>添加终点</p>\
-    <input type="text"></input>\
-    <p>请输入该路的编码ID</p>\
-    <input></input>\
+    <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
+    <p>请输入该路的备案编码ID</p>\
+    <input type="text"  style="width:98%;"></input>\
     <p>请依次从起点选择道路途径点,如无需要,可以不选</p>\
-    <input></input>\
-    <input></input>\
-    <input></input>\
-    <input></input>\
-    <input></input>\
-    <input></input>\
-    <input></input>\
-    <input></input>\
-    <button></button>\
+    <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
+    <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
+    <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
+    <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
+    <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
+    <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
+    <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
+    <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
+    <button class="exit"  @click.emit="vexit">退出</button>\
+    <button class="comfirm">确定</button>\
     </div>\
-    '
+    ',
+    methods:{
+        vexit:function(){
+            this.$emit('closeaddspan');
+        }
+    }
 });
 Vue.component("addcross",{
     template: '\
@@ -48,9 +54,9 @@ Vue.component("addcross",{
     <input></input>\
     <p>请选择该路口的经纬度</p>\
     <input></input>\
-    <button></button>\
-    </div>\
-    '
+    <button class="exit">退出</button>\
+    <button class="comfirm">确定</button>\
+    </div>'
 });
 Vue.component("addc2c",{
     template: '\
@@ -62,7 +68,8 @@ Vue.component("addc2c",{
     <input type="text"></input>\
     <p>请输入该路段的编码ID</p>\
     <input></input>\
-    <button onclick="showAndClose()"></button>\
+    <button @click="exit">退出</button>\
+    <button class="comfirm">确定</button>\
     </div>\
     '
 });
@@ -111,10 +118,11 @@ var app = new Vue({
         }],
         C2CList: [],
         vForms:[],
-        Vshow:false,
-        Rshow:false,
-        Cshow:false,
-        C2show:false
+        isShow:{
+            "road":false,
+            "cross":false,
+            "C2C":false
+        }
     },
     methods: {
         vSelectRoad: function (event) {
@@ -168,17 +176,14 @@ var app = new Vue({
             map.setZoomAndCenter(15, [crossSpan.position[0], crossSpan.position[1]]);
             inglatlput.innerHTML = "经纬度: " + crossSpan.position[0] + ',' + crossSpan.position[1];
         },
-        vAddWhat: function (event) {
-            let className = event.target.className.split(' ')[1]; //获取辨别名称
-            app.vShow = true;
+        showAddSpan: function (e) {
+            app.isShow[(e.target.className.split(' ')[1])] = true;
         },
-        addControl: function () {
-
-        },
-        showAndClose:function(){
+        closeAddSpan:function(){
             console.log(123);
-            Vshow = true ;
-            app.Rshow = true;
+            app.isShow['road']=false;
+            app.isShow['cross']=false;
+            app.isShow['C2C']=false;
         }
     }
 });

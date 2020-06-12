@@ -141,6 +141,22 @@ nav .two li:hover{
     border-radius: 5px;
     z-index: 999;
 }
-.addSpan button,p,span{
+.addSpan p,input{
     font-size: 20px;
+    margin: 5px;
+    min-width: 290px;
+    width:95%;
 }
+.addSpan button{
+    width: 60px;    
+    font-size: 20px;
+    margin: 5px;
+    background-color: #09f;
+    color: white;
+    float: right;
+}
+
+.addSpan .lonlnt{
+    
+}
+

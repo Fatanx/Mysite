@@ -9,8 +9,8 @@
         src="https://webapi.amap.com/maps?v=1.4.15&key=93c9ccfbf459daf45c035da702e15217&plugin=AMap.Driving"></script>
     <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
-    <link rel="stylesheet" href="main.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="main.css">
     <title>Map</title>
 </head>
 
@@ -22,7 +22,7 @@
                     <a href="#">路名</a>
                     <ul class="two">
                         <roadli v-for="road in roadlist" v-bind:road="road" v-on:click.native="vSelectRoad"></roadli>
-                        <li class="style_addSome road" @click="showAndClose($event)">添加一个路</li>
+                        <li class="style_addSome road" @click="showAddSpan($event)">添加一个路</li>
                     </ul>
                 </li>
                 <li>
@@ -32,24 +32,22 @@
                         <li onclick='selectPoint("九峰一路与花山大道")'>九峰一路与花山大道</li> -->
                         <crossli v-for="cross in crossList" v-bind:cross="cross" v-on:click.native="vSelectCross">
                         </crossli>
-                        <li class="style_addSome cross" @click="showAndClose($event)">添加一个路口</li>
+                        <li class="style_addSome cross" @click="showAddSpan($event)">添加一个路口</li>
                     </ul>
                 </li>
                 <li>
                     <a href="#">路段</a>
                     <ul class="two">
                         <C2Cli v-for="C2C in C2CList" v-bind:C2C="C2C" @click.native="vSelectC2C"></C2Cli>
-                        <li class="style_addSome C2C" @click="showAndClose($event)">添加一个路段</li>
+                        <li class="style_addSome C2C" @click="showAddSpan($event)">添加一个路段</li>
                     </ul>
                 </li>
 
                 <transition name="slide-fade">
-                    <div id="addSpan" v-if="Vshow">
-                        <addroad v-show:Rshow></addroad>
-                        <addcross v-show:Cshow></addcross>
-                        <addc2c v-show:C2show></addc2c>
-
-                        
+                    <div>
+                        <addroad v-if="isShow.road" v-on:closeAddSpan="closeAddSpan"></addroad>
+                        <addcross v-if="isShow.cross" v-on:closeAddSpan="closeAddSpan"></addcross>
+                        <addc2c v-if="isShow.C2C" v-on:closeAddSpan="closeAddSpan"></addc2c>
                     </div>
                 </transition>
                 <div class="clear">

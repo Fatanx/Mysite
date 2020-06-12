@@ -85,7 +85,9 @@ var selectRoad = function (roadName) {
 map.on('click', function (e) {
     AMap.plugin("AMap.Geocoder", function () {
         inglatlput.innerHTML = "经纬度: " + e.lnglat.toString();
-
+        if(addNew ){
+            lnglat_clicked(e.lnglat.toString());
+        }
     })
 });
 var $ = function (elementid) {
@@ -139,4 +141,30 @@ function getDistance(text) {
 
 function addWhat(event){
     
+}
+
+let addNew = false;
+function lnglat_click(e){
+    e.target.placeholder="请在地图上点选目标";
+    e.target.disabled="disabled";
+    addNew = true;
+}
+
+function lnglat_clicked(llString){
+    let inputLLList = document.getElementsByClassName("lnglat");
+    Array.from(inputLLList).forEach(function(dInput){
+        if(dInput.disabled == true){
+            dInput.value = llString;
+            dInput.disabled = false;
+        }
+        addNew = false;
+    })
+}
+
+function addSpanConfirm(e){
+
+}
+
+function addSpanExit(e){
+
 }
