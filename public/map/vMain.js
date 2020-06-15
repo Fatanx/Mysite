@@ -17,6 +17,7 @@ Vue.component("addroad", {
     template: '\
     <div class="addSpan" >\
     <p class="title">添加路名</p>\
+    <input type = "text" class = "roadname" placehold="请在此输入路名"></input>\
     <p>添加起点</p>\
     <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
     <p>添加终点</p>\
@@ -43,12 +44,9 @@ Vue.component("addroad", {
         addnew:function(e){
             let data={};
             let domsInput = e.target.parentElement.getElementsByTagName('input');
-            console.log(domsInput);
-            
             for(let i = 0; i < domsInput.length;i++){
                 data[i] = domsInput[i].value;
             }
-            console.log(data);
             this.$emit('addroad',data);
         }
     }
@@ -67,7 +65,12 @@ Vue.component("addcross",{
     <input></input>\
     <button class="exit"  @click.emit="vexit">退出</button>\
     <button class="comfirm">确定</button>\
-    </div>'
+    </div>',
+    methods:{
+        vexit:function(){
+            this.$emit('closeaddspan');
+        }
+    }
 });
 Vue.component("addc2c",{
     template: '\
@@ -82,7 +85,12 @@ Vue.component("addc2c",{
     <button class="exit" @click.emit="vexit">退出</button>\
     <button class="comfirm" >确定</button>\
     </div>\
-    '
+    ',
+    methods:{
+        vexit:function(){
+            this.$emit('closeaddspan');
+        }
+    }
 });
 
 var app = new Vue({
@@ -139,7 +147,7 @@ var app = new Vue({
         vSelectRoad: function (event) {
             removeMarker();
             let roadSpan;
-            roadList.forEach(function (oneRoad) {
+            this.roadlist.forEach(function (oneRoad) {
                 if (event.target.innerText == oneRoad.name) {
                     roadSpan = oneRoad;
                 }
@@ -197,12 +205,29 @@ var app = new Vue({
             app.isShow['C2C']=false;
         },
         addroad:function(data){
-            let newRoad;
-            newRoad.name = data.name;
-            startAndEnd
-            id
-            direct
-            passPoint
+            console.log(data);
+            
+            let newRoad = {
+                startAndEnd: [],
+                passPoint: [],
+                direct: '',
+                id: '',
+                name: ''
+            };
+            newRoad.name = data[0];
+            newRoad.startAndEnd =[];
+            newRoad.startAndEnd.push([Number(data[1].split(',')[0]),Number(data[1].split(',')[1])]);
+            newRoad.startAndEnd.push([Number(data[2].split(',')[0]),Number(data[2].split(',')[1])]);
+            newRoad.id=data[3];
+            newRoad.direct="1",
+            newRoad.passPoint=[];
+            for(let i = 4 ; i < 12; i ++){
+                if(data[i]){
+                    newRoad.passPoint.push([Number(data[i].split(',')[0]),Number(data[i].split(',')[1])])
+                }
+            }
+            this.roadlist.push(newRoad);
+            this.closeAddSpan();
         }
     }
 });

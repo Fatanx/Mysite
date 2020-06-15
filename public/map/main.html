@@ -45,9 +45,9 @@
 
                 <transition name="slide-fade">
                     <div>
-                        <addroad v-if="isShow.road" v-on:closeAddSpan="closeAddSpan"></addroad>
-                        <addcross v-if="isShow.cross" v-on:closeAddSpan="closeAddSpan"></addcross>
-                        <addc2c v-if="isShow.C2C" v-on:closeAddSpan="closeAddSpan"></addc2c>
+                        <addroad v-if="isShow.road" v-on:closeaddspan="closeAddSpan" v-on:addroad="addroad"></addroad>
+                        <addcross v-if="isShow.cross" v-on:closeaddspan="closeAddSpan"></addcross>
+                        <addc2c v-if="isShow.C2C" v-on:closeaddspan="closeAddSpan"></addc2c>
                     </div>
                 </transition>
                 <div class="clear">
