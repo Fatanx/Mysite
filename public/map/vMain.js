@@ -17,7 +17,8 @@ Vue.component("addroad", {
     template: '\
     <div class="addSpan" >\
     <p class="title">添加路名</p>\
-    <input type = "text" class = "roadname" placehold="请在此输入路名"></input>\
+    <div class="addSpanChild" >\
+    <input type = "text" class = "roadname" style="width:98%;" placehold="请在此输入路名"></input>\
     <p>添加起点</p>\
     <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
     <p>添加终点</p>\
@@ -35,7 +36,7 @@ Vue.component("addroad", {
     <input type="text" class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
     <button class="exit"  @click="vexit">退出</button>\
     <button class="comfirm" @click="addnew($event)">确定</button>\
-    </div>\
+    </div></div>\
     ',
     methods:{
         vexit:function(){
@@ -54,28 +55,34 @@ Vue.component("addroad", {
 Vue.component("addcross",{
     template: '\
     <div class="addSpan" >\
-    <h6>添加路名</h6>\
-    <p>选择东西走向路</p>\
-    <input></input></br>\
-    <p>选择南北走向路</p>\
-    <input type="text"></input>\
+    <p class="title">添加路口</p>\
+    <p>请选择东西走向路名</p>\
+    <input type="text" @click="infoshow" style="width:98%;"  readonly="true"></input>\
+    <p>请选择南北走向路名</p>\
+    <input type="text" style="width:98%;"  readonly="true"></input>\
+    <p>该路口的名称为</p>\
+    <input type="text" style="width:98%;"  readonly="true"></input>\
     <p>请输入该路口的编码ID</p>\
-    <input></input>\
-    <p>请选择该路口的经纬度</p>\
-    <input></input>\
-    <button class="exit"  @click.emit="vexit">退出</button>\
+    <input  style="width:98%;"></input>\
+    <p>请再地图上点选该路口的位置</p>\
+    <input class="lnglat" readonly="true" style="width:98%;" onclick="lnglat_click(event)"></input>\
+    <button class="exit"  @click="vexit">退出</button>\
     <button class="comfirm">确定</button>\
     </div>',
     methods:{
         vexit:function(){
             this.$emit('closeaddspan');
+        },
+        infoshow:function(){
+            console.log(123);
+            this.$emit('infoshow');        
         }
     }
 });
 Vue.component("addc2c",{
     template: '\
     <div class="addSpan" >\
-    <h6>添加路段</h6>\
+    <p class="title">添加路段</p>\
     <p>选择起点路口</p>\
     <input></input></br>\
     <p>选择终点路口</p>\
@@ -92,6 +99,18 @@ Vue.component("addc2c",{
         }
     }
 });
+Vue.component('showinfo',{
+    template:'<div class="selectSpan">点我\
+    <p class="title"\
+    \
+    \
+    \
+    \
+    \
+    </div>'
+});
+
+
 
 var app = new Vue({
     el: "#level",
@@ -141,7 +160,9 @@ var app = new Vue({
             "road":false,
             "cross":false,
             "C2C":false
-        }
+        },
+        ll:[1,2,3,4,5],
+        showBox:false,
     },
     methods: {
         vSelectRoad: function (event) {
@@ -199,14 +220,11 @@ var app = new Vue({
             app.isShow[(e.target.className.split(' ')[1])] = true;
         },
         closeAddSpan:function(){
-            console.log(123);
             app.isShow['road']=false;
             app.isShow['cross']=false;
             app.isShow['C2C']=false;
         },
         addroad:function(data){
-            console.log(data);
-            
             let newRoad = {
                 startAndEnd: [],
                 passPoint: [],
@@ -228,6 +246,11 @@ var app = new Vue({
             }
             this.roadlist.push(newRoad);
             this.closeAddSpan();
-        }
+        },
+        showbox:function(){
+            console.log("show box");
+            this.showBox = true;
+            
+        }   
     }
 });

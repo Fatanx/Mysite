@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
-    <script
-        src="https://webapi.amap.com/maps?v=1.4.15&key=93c9ccfbf459daf45c035da702e15217&plugin=AMap.Driving"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=93c9ccfbf459daf45c035da702e15217&plugin=AMap.Driving"></script>
     <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -42,14 +40,10 @@
                         <li class="style_addSome C2C" @click="showAddSpan($event)">添加一个路段</li>
                     </ul>
                 </li>
-
-                <transition name="slide-fade">
-                    <div>
-                        <addroad v-if="isShow.road" v-on:closeaddspan="closeAddSpan" v-on:addroad="addroad"></addroad>
-                        <addcross v-if="isShow.cross" v-on:closeaddspan="closeAddSpan"></addcross>
-                        <addc2c v-if="isShow.C2C" v-on:closeaddspan="closeAddSpan"></addc2c>
-                    </div>
-                </transition>
+                <addroad v-if="isShow.road" v-on:closeaddspan="closeAddSpan" v-on:addroad ="addroad"></addroad>
+                <addcross v-if="isShow.cross" v-on:closeaddspan="closeAddSpan" v-on:infoshow="showbox" ></addcross>
+                <addc2c v-if="isShow.C2C" v-on:closeaddspan="closeAddSpan"></addc2c>
+                <showinfo v-if="showBox" ></showinfo>
                 <div class="clear">
             </ul>
         </nav>

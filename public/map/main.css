@@ -8,7 +8,15 @@ html,body{
     height: 100%;
     width:100%;
     background-color: #09e;
+    min-width: 800px;
 }
+.title{
+    background-color: #09e;
+    margin-top:0;
+    color: white;
+    width: auto;
+}
+
 .style_addSome{
     background-color: black;
 }
@@ -24,6 +32,9 @@ html,body{
 ul,li,a{
     font-size: 20px;
     z-index: 999;
+}
+ul{
+    min-width: 800px;
 }
 .clear{clear: both;}  /* 清除浮动 */
 a{text-decoration-line: none;}   /* 去掉默认a标签的下划线 */
@@ -73,6 +84,7 @@ nav .two li:hover{
     width:100%;
     z-index: 0;
     position: absolute;
+    min-width: 800px;
 }
 #panel{
     position: fixed;
@@ -135,17 +147,26 @@ nav .two li:hover{
     min-width:320px;
     position: absolute;
     margin-left:5%;
-    margin-top: 10%;
+    margin-top: 90px;
     background-color: white;
     border:solid 1px gray;
     border-radius: 5px;
     z-index: 999;
 }
+.addSpanChild{
+    width: auto;
+    padding:5px;
+}
 .addSpan p,input{
     font-size: 20px;
-    margin: 5px;
+    margin: 0 0 5px 0;
     min-width: 290px;
-    width:95%;
+    width:100%;
+    font-family: Arial, Helvetica, sans-serif;
+    display: block;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    margin-block-end: 0em;
 }
 .addSpan button{
     width: 60px;    
@@ -156,7 +177,18 @@ nav .two li:hover{
     float: right;
 }
 
-.addSpan .lonlnt{
-    
+.selectSpan{
+    width : 400px;
+    height: 350px;
+    background-color: white;
+    border: solid 1px gray;
+    border-radius: 5px;
+    position: absolute;
+    left:50%;
+    top:50%;
+    margin-left: -200px;
+    margin-top: -150px;
+    z-index: 999;
 }
+
 
