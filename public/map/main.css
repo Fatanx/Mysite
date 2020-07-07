@@ -33,9 +33,7 @@ ul,li,a{
     font-size: 20px;
     z-index: 999;
 }
-ul{
-    min-width: 800px;
-}
+
 .clear{clear: both;}  /* 清除浮动 */
 a{text-decoration-line: none;}   /* 去掉默认a标签的下划线 */
 .level{
