@@ -59,10 +59,6 @@ function  readFile(_path){
 
 function writeFile(path,mode){
     let result = '';
-
-
-
-
     return result ;
 }
 

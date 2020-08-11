@@ -43,7 +43,7 @@ mongoose.Promise = Promise;
 
   const Admin = new User({
     username:"admin",
-    userpassword:"123456",
+    userpassword:"e10adc3949ba59abbe56e057f20f883e",
     usermail:"test@mail.com",
     usertel:"13348297593"
   });
