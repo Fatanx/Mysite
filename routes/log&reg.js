@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://fatan.xyz/test', {useNewUrlParser: true});
+mongoose.connect('mongodb://fatan.xyz:27015/test', {useNewUrlParser: true});
 mongoose.Promise = Promise;
 
 

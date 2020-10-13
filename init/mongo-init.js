@@ -2,15 +2,7 @@
 mongoose.set('useCreateIndex', true);作用是允许使用 index 唯一键
 schema.remove({参数})用来删除指定匹配数据
 _schema.save（{}）用来存储数据
-
-
-
-
 */
-
-
-
-
 // var mongoose = require('Mongodb').MongoClient;
 //
 // mongoose.connect('mongodb://111.231.193.45/test', {useNewUrlParser: true},function(err,db){
@@ -23,11 +15,10 @@ _schema.save（{}）用来存储数据
 //     db.close();
 //   })
 // });
-
-var mongoose = require('mongoose');
-mongoose.set('useCreateIndex', true);
-mongoose.connect('mongodb://111.231.193.45/test', {useNewUrlParser: true});
-mongoose.Promise = Promise;
+  var mongoose = require('mongoose');
+  mongoose.set('useCreateIndex', true);
+  mongoose.connect('mongodb://111.231.193.45:27015/test', {useNewUrlParser: true});
+  mongoose.Promise = Promise;
   var userSchema = new mongoose.Schema({
     username:{type:String,unique:true},
     userpassword:String,

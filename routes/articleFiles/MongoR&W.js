@@ -16,7 +16,7 @@ var MongoClient = require('mongodb').MongoClient;
 //获得所有文章
 
 router.post("/getall",function(req,res){
-  MongoClient.connect('mongodb://111.231.193.45', { useNewUrlParser: true }, function(err, db) {
+  MongoClient.connect('mongodb://111.231.193.45:27015', { useNewUrlParser: true }, function(err, db) {
       if (err) {
           console.log(err);
           res.send({msg:err});
