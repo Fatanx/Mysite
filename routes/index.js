@@ -3,7 +3,7 @@ const router = express.Router();
 const crypto = require("crypto");
 const sha = crypto.createHash("sha256")
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
+mongoose.connect('mongodb://fatan.xyz:27015/test', {useNewUrlParser: true});
 mongoose.Promise = Promise;
 
 //建立User类

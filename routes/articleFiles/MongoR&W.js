@@ -30,7 +30,6 @@ router.post("/getall",function(req,res){
               res.send({msg:err});
             }
             else {
-              console.log(result);
               db.close();
               res.send({msg:result});
             }

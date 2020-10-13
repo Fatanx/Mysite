@@ -12,7 +12,14 @@
 <body>
     <div class = "header">
         <img src="./images/51banner.jpg"/>
-        <div class="nav"><ul>this is nav</ul></div>
+    </div>
+    <div class="nav" id ="nav">
+      <ul class="navUl">
+        <navli
+          v-for="navli in navList"
+          v-bind:navitem = "navli"
+        ></navli>
+      </ul>
     </div>
     <div class="container" id= "container" >
         <div class = "center col">
@@ -49,6 +56,15 @@
                     <span class = 'content' v-html ='aaa.content'></span>\
                 </div>",
     });
+    Vue.component('navli',{
+      props:["navitem"],
+      template:"<li class='navLi' @click='jumpToHtml'>{{navitem.name}}</li>"
+      ,methods:{
+              jumpToHtml:function(){
+                window.location.href=this.navitem.url;
+              }
+      },
+    });
     Vue.component('pages', {
         props:["page"],
         template: "<li>{{page.text}}</li>"
@@ -82,6 +98,13 @@
         mounted:function(){
           this.greet()
         }
+    })
+
+    var app1 = new Vue({
+      el:"#nav",
+      data:{
+        navList:[{name:"首页",url:"./"},{name:"地图",url:"./map/main.html"},{name:"抽奖",url:"./choujiang.html"}]
+      }
     })
 </script>
 </html>
