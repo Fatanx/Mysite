@@ -1,110 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
-    <link rel='stylesheet' href='/stylesheets/MySite.css' />
-    <title>MySite</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+  <link rel='stylesheet' href='/stylesheets/MySite.css' />
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+  <title>MySite</title>
 </head>
+
 <body>
-    <div class = "header">
-        <img src="./images/51banner.jpg"/>
-    </div>
-    <div class="nav" id ="nav">
-      <ul class="navUl">
-        <navli
-          v-for="navli in navList"
-          v-bind:navitem = "navli"
-        ></navli>
+  <div class="nav" id="nav">
+    <ul class="navUl">
+      <navli v-for="navli in navList" v-bind:navitem="navli"></navli>
+    </ul>
+  </div>
+  <div class="header">
+    <img src="./images/51banner.jpg" />
+  </div>
+  <div class="container" id="container">
+    <div class="center col">
+      <div id="articles">
+        <articles v-for="item in articles" v-bind:aaa="item"></articles>
+      </div>
+      <ul id="pageNumList">
+        <pages v-for="item in pageNum" v-bind:page="item"></pages>
       </ul>
     </div>
-    <div class="container" id= "container" >
-        <div class = "center col">
-          <div id="articles">
-            <articles
-                v-for="item in articles"
-                v-bind:aaa = "item"
-            ></articles>
-          </div>
-          <ul id="pageNumList">
-            <pages
-                v-for="item in pageNum"
-                v-bind:page = "item"
-            ></pages>
-          </ul>
-        </div>
-        <div class = "left col">this is left</br>123</div>
-        <div class = "right col">this is right</div>
+    <div class="left col">
+      <div class = 'controlbox'>
+        <p>welcome,tan</p>
+        <button onclick="addNewShow()">添加新文章</button></br>
+        <button>我要留言</button>  
+      </div>
     </div>
-    <div class = "footer">
-        <p> 鄂ICP备19026213号-1</p>
-        <p><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42018502004261" >鄂公网安备 42018502004261号</a></p>
+    <div class="right col">this is right</div>
+  </div>
+  <div class="footer">
+    <p> 鄂ICP备19026213号-1</p>
+    <p><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42018502004261">鄂公网安备
+        42018502004261号</a></p>
+  </div>
+  <div class='addBox' style="display:none" id='addNew'>
+    <div class='boxTitle'>
+      添加新文章
+        <button onclick = addNewClose(this)>X</button>
     </div>
+    <div class = 'boxContent'>
+      <p>标题</p>
+      <input type="text" id="addNewInput1">
+      <p>正文</p>
+      <textarea  id="addNewInput2"></textarea>
+    </div>
+    <div class = 'boxButton'>
+      <button class="addNewClose" onclick="addNewClose(this)">关闭</button>
+      <button class="addNewConfirm" onclick="addNewConfirm()">保存</button>
+    </div>
+  </div>
 </body>
 <script>
-    Vue.component('articles', {
-        props:["aaa"],
-        template:
-                "<div class = 'article'>\
-                    <h1 class ='title'>{{aaa.title}}</h1>\
-                    <p class = 'author'>作者:{{aaa.author}}</p>\
-                    <p class = 'date'>{{aaa.date}}</p>\
-                    </br>\
-                    <span class = 'content' v-html ='aaa.content'></span>\
-                </div>",
-    });
-    Vue.component('navli',{
-      props:["navitem"],
-      template:"<li class='navLi' @click='jumpToHtml'>{{navitem.name}}</li>"
-      ,methods:{
-              jumpToHtml:function(){
-                window.location.href=this.navitem.url;
-              }
-      },
-    });
-    Vue.component('pages', {
-        props:["page"],
-        template: "<li>{{page.text}}</li>"
-    });
-
-    var app = new Vue({
-        el:"#container",
-        data:{
-            articles:[],
-            pageNum:[{
-              id:0,
-              text:"上一页"
-            },{
-              id:1,
-              text:"1"
-            },{
-              id:-1,
-              text:"下一页"
-            }]
-        },
-        methods:{
-          greet:function(){
-            var thiss = this;
-            this.articles = $.post('/article/getall',{page:1,limit:5},function(res){
-              thiss.articles = res.msg;
-              console.log(thiss.articles);
-              
-            });
-          }
-        },
-        mounted:function(){
-          this.greet()
-        }
-    })
-
-    var app1 = new Vue({
-      el:"#nav",
-      data:{
-        navList:[{name:"首页",url:"./"},{name:"地图",url:"./map/main.html"},{name:"抽奖",url:"./choujiang.html"}]
-      }
-    })
+ 
 </script>
+<script src="./mysite/mysite.js"></script>
+<script src="./mysite/Vmysite.js"></script>
 </html>

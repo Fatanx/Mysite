@@ -9,9 +9,10 @@
     <script type="text/javascript">
       function load(){
         let wait_time = 3;
+        document.getElementsByClassName("last_time")[0].innerHTML = wait_time;
         setInterval(function (){
-          if(wait_time != -1){
-            document.getElementsByClassName("last_time")[0].innerHTML = wait_time--;
+          if(wait_time != 0){
+            document.getElementsByClassName("last_time")[0].innerHTML = --wait_time;
           }
           else{
             // window.location.replace("../album.html");

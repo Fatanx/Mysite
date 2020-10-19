@@ -1,75 +1,90 @@
-*{
-    list-style:none;
+* {
+    list-style: none;
     margin: 0;
     padding: 0;
 }
-body{
-    min-width:900px;
+
+body {
+    min-width: 900px;
     background-color: #eee;
 }
-.header{
+
+.header {
     font-size: 0;
-    width:99.6%;
+    width: 100%;
 
 }
-.header>img{
-    width:inherit;
+
+.header>img {
+    width: inherit;
     z-index: -1;
 }
 
-.navUl{
+.navUl {
     background-color: black;
     color: white;
     min-height: 25px;
 }
-.navUl>li{
-    float: left;
-    margin:3px 5px;
+
+.navul:hover {
+    cursor: default;
 }
 
-.col{
+.navUl>li {
+    float: left;
+    margin: 3px 5px;
+}
+
+.navUl>li:hover {
+    cursor: default;
+}
+
+.col {
     float: left;
 }
-.container{
+
+.container {
     padding-left: 200px;
     padding-right: 200px;
 }
-.center{
-    width:99.6%;
+
+.center {
     height: auto;
+    width: 100%;
     margin-top: 5px;
-    background-color: rgba(255,255,255,0.9);
+    background-color: rgba(255, 255, 255, 0.9);
     border: solid 1px #eee;
-    border-radius: 15px ;
+    border-radius: 15px;
     text-align: center;
     margin-bottom: 5px;
     z-index: 0;
 }
 
-.center > .article{
-    margin:10px;
-    padding:15px;
+.center>.article {
+    margin: 10px;
+    padding: 15px;
 }
 
-.center .title{
+.center .title {
     text-align: left;
     margin: 5px 15px;
 }
 
-.center .author{
-    color: gray;
-    text-align: left;
-    margin-left: 17px;
-    font-size: 16px;
-}
-.center .date{
+.center .author {
     color: gray;
     text-align: left;
     margin-left: 17px;
     font-size: 16px;
 }
 
-.center .content{
+.center .date {
+    color: gray;
+    text-align: left;
+    margin-left: 17px;
+    font-size: 16px;
+}
+
+.center .content {
     display: inline-block;
     clear: both;
     width: 92%;
@@ -78,45 +93,121 @@ body{
     border-bottom: 1px gray solid;
     margin-bottom: 25px;
     font-size: 20px;
-    padding:5px;
+    padding: 5px;
 }
 
-.center li{
-  font-size: 15px;
-  background-color: #eee;
-  color:black;
-  line-height: 20px;
-  border-radius: 3px;
-  border:1px white solid;
-  height:20px;
-  padding: 0 10px 0 10px;
-  padding: 2px;
-  display:inline-block;
-  margin:  0 5px 0 5px;
-  transition:background 0.5s,color 0.5s;
+.center li {
+    font-size: 15px;
+    background-color: #eee;
+    color: black;
+    line-height: 20px;
+    border-radius: 3px;
+    border: 1px white solid;
+    height: 20px;
+    padding: 0 10px 0 10px;
+    padding: 2px;
+    display: inline-block;
+    margin: 0 5px 0 5px;
+    transition: background 0.5s, color 0.5s;
 }
+
 .center li:hover {
-  background-color:#39f;
-  color: white;
+    background-color: #39f;
+    color: white;
 }
-.left{
-    width:250px;
+
+.left {
+    width: 200px;
     height: 100px;
     margin-left: -100%;
     position: relative;
-    right:200px;
+    right: 200px;
+    text-align: center;
 }
-.right{
-    width: 250px;
-    margin-right:-200px;
+
+.left>.controlbox {
+    height: 130px;
+    margin: 15px;
+    padding: 25px;
+    border: 1px white solid;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.left>.controlbox>button {
+    margin-top: 20px;
+    border: none;
+}
+
+.left>.controlbox>button:hover {
+    background-color: #39f;
+    color: white;
+    transition: all 0.5s;
+}
+
+.right {
+    width: 200px;
+    margin-right: -200px;
     height: 100px;
 }
 
-.footer{
+.footer {
     clear: both;
     height: 100px;
     text-align: center;
     line-height: 40px;
     height: 80px;
     background-color: #69f;
+}
+
+.addBox {
+    position: fixed;
+    top: 500px;
+    min-height: 450px;
+    min-width: 650px;
+    width: 800px;
+    left: 50%;
+    margin: -400px;
+    background-color: wheat;
+}
+
+.addBox>.boxTitle {
+    background-color: #39f;
+    color: white;
+    padding: 3px;
+}
+
+.addBox>.boxTitle>button {
+    float: right;
+    width: 30px;
+}
+
+.addBox>.boxContent {
+    margin: 35px;
+    text-align: center;
+}
+
+.addBox>.boxContent p{
+    text-align: left;
+    color:#555;
+    font-size: 22px;
+}
+.addBox>.boxContent input,textarea {
+    width: 100%;
+    border: 0;
+    background-color: rpga(255,255,255,0.1);
+    display:block;
+    font-size: 30px;
+    padding:3px;
+    margin-bottom: 4px;
+    resize:none;
+}
+.addBox>.boxContent #addNewInput2{
+    height:350px;
+}
+.addBox>.boxButton>button{
+    float:right;
+    margin:0 35px 35px 0;
+    
+    font-size: 18px;
 }
