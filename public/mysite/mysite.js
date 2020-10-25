@@ -12,9 +12,12 @@ function addNewConfirm() {
         $.post('/mongo/saveArt', {
             title: addNewTitle.value,
             content: addNewContent.value
-        }, (req, res) => {
-            if(res=="success!"){
+        }, (res) => {
+            if (res.msg == "success") {
+                addNewTitle.value = "";
+                addNewContent.value = "";
                 addNewBox.style.display = "none";
+                window.location.reload();
             }
         })
     }
@@ -24,17 +27,15 @@ function addNewShow() {
     addNewBox.style.display = "";
 }
 
-function check_in(){
-    $.get('/check_in_or_out/check',function(res){
-      if(res.msg == "in"){
-        console.log('登录了');
-      }
-      else{
-        // $.get('./');
-        document.location='./';
-      }
+function check_in() {
+    $.get('/check_in_or_out/check', res=>{
+        if (res.msg == "in") {
+        } else {
+            document.location = './';
+        }
     })
-  };
-$("document").ready(function(){
+};
+
+$("document").ready(function () {
     check_in();
 })

@@ -1,6 +1,6 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://fatan.xyz:27015/test', {useNewUrlParser: true});
+mongoose.connect('mongodb://fatan.xyz:27015/test', {useNewUrlParser: true,useUnifiedTopology: true});
 mongoose.Promise = Promise;
 
 let articleSchema = new mongoose.Schema({
@@ -11,8 +11,7 @@ let articleSchema = new mongoose.Schema({
 });
 const Article = mongoose.model("Article",articleSchema);
 
-router.post('/saveArt', function(req, res, next) {
-    console.log(req.body,req.session.username);
+router.post('/saveArt', function(req, res) {
     const newArt = new Article({
         title:req.body["title"],
         date:Date.now(),
@@ -20,7 +19,7 @@ router.post('/saveArt', function(req, res, next) {
         content:req.body['content']
     });
     newArt.save();
-    res.send("success!");
+    res.send({msg:"success"});
 });
 
 module.exports = router;
