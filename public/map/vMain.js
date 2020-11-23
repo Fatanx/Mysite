@@ -74,7 +74,6 @@ Vue.component("addcross",{
             this.$emit('closeaddspan');
         },
         infoshow:function(){
-            console.log(123);
             this.$emit('infoshow');        
         }
     }
