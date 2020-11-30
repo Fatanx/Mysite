@@ -1,6 +1,6 @@
 var express = require ('express');
 var router = express.Router();
-const tencentcloud = require("./tencentcloud");
+const tencentcloud = require("tencentcloud-sdk-nodejs");
 
 
 
