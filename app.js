@@ -44,6 +44,7 @@ app.use('/QR',require("./routes/QR"));
 app.use('/article',require("./routes/articleFiles/MongoR&W.js"));
 app.use('/webService',require("./routes/webService.js"));
 app.use('/mongo',require('./routes/mongo.js'));
+app.use('/sendPhoneKey',require("./routes/SendSms"))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
