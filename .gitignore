@@ -3,3 +3,4 @@ public/images/prebg/
 sessions/
 upload/
 routes/SendSms.js
+routes/sms/
