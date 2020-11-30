@@ -139,7 +139,7 @@
           let ex_true = ex.test(mailadd)&&mailadd.length == 11;        
           if (ex_true){
             mailadd = "+86" + mailadd;
-            $.post("sendPhoneKey/ssms",{PhoneNO:mailadd},res=>{
+            $.post("sendPhoneKey",{PhoneNO:mailadd},res=>{
               if(res.msg == 'success!'){
                 msgbox_alert("验证码已发送给手机!")
                 codekey = res.key;
