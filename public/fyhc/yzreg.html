@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <link rel='stylesheet' href='./yzreg.css'/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>业主登记</title>
+</head>
+<body>
+    <div class = "box" id="main">
+        <p class = "title">基本信息确定</p>
+        </br>
+        <p class="buildNo">请选择你的楼栋号:</p>
+        <select name="buildNo" class="buildNo" id="">
+            <buildSelect></buildSelect>
+        </select>
+        <p class="groupNo">请选择你的单元号</p>
+        <select name="groupNo" class="groupNo" id="">
+            <groupSelect></buildSelect>
+        </select>
+        <p class="roomNo">请选择你的房号</p>
+        <select name="roomNo" class="roomNo" id="">
+            <roomSelect></buildSelect>
+        </select>
+
+    </div>
+</body>
+<script src="./yzreg.js"></script>
+</html>

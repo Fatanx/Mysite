@@ -36,15 +36,14 @@ app.use('/users', usersRouter);
 app.use('/login',require("./routes/log&reg.js"));
 app.use('/send_key',require("./routes/email.js"));
 app.use('/check_in_or_out',require("./routes/users"));
-app.use('/image',require("./routes/imagesup"));
-      
+app.use('/image',require("./routes/imagesup"));    
 app.use('/reg1',require("./routes/cj"));//抽奖程序
 app.use('/QR',require("./routes/QR"));
-// app.use('/ssms',require("./routes/sms/SendSms.js"));
 app.use('/article',require("./routes/articleFiles/MongoR&W.js"));
 app.use('/webService',require("./routes/webService.js"));
 app.use('/mongo',require('./routes/mongo.js'));
-app.use('/sendPhoneKey',require("./routes/sms/SendSms.js"))
+app.use('/sendPhoneKey',require("./routes/sms/SendSms.js"));
+app.use('/fyhc',require("./routes/fyhc/fyhc1.js"));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
