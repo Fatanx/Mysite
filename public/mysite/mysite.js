@@ -9,7 +9,7 @@ function addNewClose(obj) {
 
 function addNewConfirm() {
     if (addNewTitle.value && addNewContent.value) {
-        $.post('/mongo/saveArt', {
+        $.post('/article/saveArt', {
             title: addNewTitle.value,
             content: addNewContent.value
         }, (res) => {

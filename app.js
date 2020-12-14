@@ -39,11 +39,11 @@ app.use('/check_in_or_out',require("./routes/users"));
 app.use('/image',require("./routes/imagesup"));    
 app.use('/reg1',require("./routes/cj"));//抽奖程序
 app.use('/QR',require("./routes/QR"));
-app.use('/article',require("./routes/articleFiles/MongoR&W.js"));
+app.use('/article',require("./routes/articleFiles/MongoR&W.js"));//文章程序
 app.use('/webService',require("./routes/webService.js"));
-app.use('/mongo',require('./routes/mongo.js'));
+//app.use('/mongo',require('./routes/mongo.js'));功能迁移到 /article
 app.use('/sendPhoneKey',require("./routes/sms/SendSms.js"));
-app.use('/fyhc',require("./routes/fyhc/fyhc1.js"));
+app.use('/fyhc',require("./routes/fyhc/fyhc1.js"));//烽云慧城
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

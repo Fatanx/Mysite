@@ -19,7 +19,7 @@ router.post('/reg', function (req, res, next) {
     }
     dbo.collection("users").insertOne(myobj, function (err, res) {
       if (err) throw err;
-      console.log("用户数据已插入");
+      console.log("info","用户数据已插入");
       db.close();
     });
   });
