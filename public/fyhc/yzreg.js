@@ -77,7 +77,7 @@ function loadRoomNo(gNo) {
 
 function toDatabase(){
     console.log(selectRoomDom[0].value);
-    $.post('/fyhc/toDatabase',{roomId:document.getElementById("SroomNo").value,name:inputName.value,tel:inputTel.value},res=>{
+    $.post('/fyhc/toDatabase',{roomId:document.getElementById("SroomNo").value,name:inputName[0].value,tel:inputTel[0].value},res=>{
         console.log(res);
     })
 }
