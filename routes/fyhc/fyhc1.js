@@ -85,12 +85,12 @@ router.post('/toDatabase',function(req,res){
         useNewUrlParser: true,useUnifiedTopology:true
     }, function (err, db) {
         var dbo = db.db("fyhc");
-        var myobj = { roomId: req.body.roomId,name: req.body.name, tel:req.body.tel };
-        console.log(myobj,req.body);
+        var myobj = { roomId: req.body.roomId,name: req.body.name, tel:req.body.tel,date:Date.now(), };
+        //console.log(myobj,req.body);
         dbo.collection("yzData").insertOne(myobj,function (err, result){
             if (err) {
                 db.close();
-                res.send("save incomplete");
+                res.send("save incomplete,请联系管理员18986270059请提供下面错误代码"+err);
             } else {
                 db.close();
                 res.send("save complete");

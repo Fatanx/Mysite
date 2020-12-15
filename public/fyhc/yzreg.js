@@ -78,7 +78,12 @@ function loadRoomNo(gNo) {
 function toDatabase(){
     console.log(selectRoomDom[0].value);
     $.post('/fyhc/toDatabase',{roomId:document.getElementById("SroomNo").value,name:inputName[0].value,tel:inputTel[0].value},res=>{
-        console.log(res);
+        selectBuildDom[0].value = "0" 
+        selectGroupDom[0].value = "0"
+        selectRoomDom[0].value = "0"
+        inputName[0].value = "";
+        inputTel[0].value = "";
+        window.alert(res);
     })
 }
 
