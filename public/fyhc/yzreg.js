@@ -8,12 +8,12 @@ let inputTel = $("#yzTel");
 
 $(document).ready(function () {
     loadBuildNo();
-    //document.getElementById("SbuildNo").innerHTML = "";
+    document.getElementById("SbuildNo").innerHTML = "<option value='0'>--请选择--</option>";
     currentBn = document.getElementById("SbuildNo").value;
 })
 selectBuildDom.change(function (e) {
     if (e.target.value != "0") {
-        //document.getElementById("SgroupNo").innerHTML = "";
+        document.getElementById("SgroupNo").innerHTML = "<option value='0'>--请选择--</option>";
         loadGroupNo(e.target.value);
         currentBn = e.target.value;
 
