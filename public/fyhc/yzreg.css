@@ -2,16 +2,19 @@
     margin:0;
     padding: 0;
     list-style: none;
+    padding: 15px;
+    font-size: 24px;
 }
 
 
 .box{
-    width:600px;
+    width:320px;
     height: 600px;
     position: absolute;
-    left:50%;
-    top:50%;
-    margin-left: -300px;
-    margin-top:-400px;
-
+    margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+    bottom: 0;
+    padding:30px;
 }

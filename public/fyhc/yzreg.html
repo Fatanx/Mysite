@@ -17,23 +17,29 @@
             </br>
             <p class="buildNo">请选择你的楼栋号:</p>
             <select name="buildNo" class="buildNo" id="SbuildNo">
+                <option value="0">--请选择--</option>
             </select>
             <p class="groupNo">请选择你的单元号</p>
             <select name="groupNo" class="groupNo" id="SgroupNo">
+                <option value="0">--请选择--</option>
             </select>
             <p class="roomNo">请选择你的房号</p>
             <select name="roomNo" class="roomNo" id="SroomNo">
+                <option value="0">--请选择--</option>
             </select>
-            <button class ="next">下一步</button>
+            <br>
+            <button class ="next" id="buttonNext">下一步</button>
         </div>
-        <div class = "stepTwo">
+        <div class = "stepTwo" style="display:none">
             <p class="title">业主身份记录</p>
             <br>
             <p class="yzName">请输入您的名称,可用昵称代替</p>
-            <input type="text">
+            <input type="text" class="yzName" id="yzName">
             <p class="yzTel">请输入您的电话,我们会加密保管</p>
-            <input type="text">
-            <button class="confirm">确认无误</button>
+            <input type="text" class="yzTel" id="yzTel">
+            <br>
+            <button class="back" id="buttonBack">上一步</button>
+            <button class="confirm" id="buttonConfirm">确认无误</button>
         </div>
     </div>
 </body>

@@ -71,16 +71,33 @@ router.post('/getRoomNo', function (req, res) {
     let result = [];
     let buildNo = req.body.bNo;
     let groupNo = req.body.No;
-    console.log(buildNo,groupNo);
-    console.log(allRoomNo[buildNo][groupNo]);
 
-   for(var key in allRoomNo[buildNo][groupNo])
+   for(var KEY in allRoomNo[buildNo][groupNo])
    {
-       result.push(allRoomNo[buildNo][groupNo][key])
+       result.push({key:KEY,value:allRoomNo[buildNo][groupNo][KEY]});
    }
     res.send(result);
 })
 
+
+router.post('/toDatabase',function(req,res){
+    MongoClient.connect('mongodb://111.231.193.45:27015', {
+        useNewUrlParser: true,useUnifiedTopology:true
+    }, function (err, db) {
+        var dbo = db.db("fyhc");
+        var myobj = { roomId: req.body.roomId,name: req.body.name, tel:req.body.tel };
+        console.log(myobj,req.body);
+        dbo.collection("yzData").insertOne(myobj,function (err, result){
+            if (err) {
+                db.close();
+                res.send("save incomplete");
+            } else {
+                db.close();
+                res.send("save complete");
+            }
+        })
+    })
+})
 
 getAllRoomData();//启动服务的同时就加载进入服务端
 
