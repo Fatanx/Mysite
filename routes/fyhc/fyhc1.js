@@ -13,6 +13,7 @@ router.get('/check', function(req, res, next) {
 */
 let allRoomNo;
 function getAllRoomData() {
+    console.log("info:","fyhc当前版本 v0.5");
     console.log("info:","正在加载 allRoomNo");
     MongoClient.connect('mongodb://111.231.193.45:27015', {
         useNewUrlParser: true,useUnifiedTopology:true
@@ -85,7 +86,7 @@ router.post('/toDatabase',function(req,res){
         useNewUrlParser: true,useUnifiedTopology:true
     }, function (err, db) {
         var dbo = db.db("fyhc");
-        var myobj = { roomId: req.body.roomId,name: req.body.name, tel:req.body.tel,date:Date.now(), };
+        var myobj = { roomId: req.body.roomId,name: req.body.name, tel:req.body.tel,date:Date.now(),self:req.body.self };
         //console.log(myobj,req.body);
         dbo.collection("yzData").insertOne(myobj,function (err, result){
             if (err) {

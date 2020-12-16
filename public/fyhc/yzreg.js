@@ -5,6 +5,7 @@ let selectGroupDom = $("#SgroupNo");
 let selectRoomDom = $("#SroomNo");
 let inputName = $("#yzName");
 let inputTel = $("#yzTel");
+let selectSelf = $("#SisSelf");
 
 $(document).ready(function () {
     loadBuildNo();
@@ -77,12 +78,13 @@ function loadRoomNo(gNo) {
 
 function toDatabase(){
     console.log(selectRoomDom[0].value);
-    $.post('/fyhc/toDatabase',{roomId:document.getElementById("SroomNo").value,name:inputName[0].value,tel:inputTel[0].value},res=>{
+    $.post('/fyhc/toDatabase',{roomId:document.getElementById("SroomNo").value,name:inputName[0].value,tel:inputTel[0].value,self:selectSelf[0].value},res=>{
         selectBuildDom[0].value = "0" 
         selectGroupDom[0].value = "0"
         selectRoomDom[0].value = "0"
         inputName[0].value = "";
         inputTel[0].value = "";
+        selectSelf[0].value = "0"
         window.alert(res);
     })
 }
