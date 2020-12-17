@@ -33,8 +33,10 @@ $("#buttonConfirm").click(function () {
     if (selectBuildDom[0].value != "0" && selectGroupDom[0].value != "0" && selectRoomDom[0].value != "0" && /[\u4e00-\u9fa5]/.test(inputName[0].value) && /^1[0-9]{10}/.test(inputTel[0].value)) {
         console.log("success");
         toDatabase();
-    } else {
-        console.log("wrong msg");
+    } else if (!/[\u4e00-\u9fa5]/.test(inputName[0].value)) {
+        window.alert("名称请使用中文!")
+    }else if(! /^1[0-9]{10}/.test(inputTel[0].value)){
+        window.alert("错误的电话号码!")
     }
 })
 
@@ -76,10 +78,15 @@ function loadRoomNo(gNo) {
     });
 }
 
-function toDatabase(){
+function toDatabase() {
     console.log(selectRoomDom[0].value);
-    $.post('/fyhc/toDatabase',{roomId:document.getElementById("SroomNo").value,name:inputName[0].value,tel:inputTel[0].value,self:selectSelf[0].value},res=>{
-        selectBuildDom[0].value = "0" 
+    $.post('/fyhc/toDatabase', {
+        roomId: document.getElementById("SroomNo").value,
+        name: inputName[0].value,
+        tel: inputTel[0].value,
+        self: selectSelf[0].value
+    }, res => {
+        selectBuildDom[0].value = "0"
         selectGroupDom[0].value = "0"
         selectRoomDom[0].value = "0"
         inputName[0].value = "";
@@ -92,16 +99,16 @@ function toDatabase(){
 
 /////////////////////////////////翻页功能//////////////////////////
 $("#buttonNext").click(function () {
-    if (selectBuildDom[0].value != "0" && selectGroupDom[0].value != "0" && selectRoomDom[0].value != "0"){
-        $(".stepTwo").css("display","inline-block");
-        $(".stepOne").css("display","none");
+    if (selectBuildDom[0].value != "0" && selectGroupDom[0].value != "0" && selectRoomDom[0].value != "0") {
+        $(".stepTwo").css("display", "inline-block");
+        $(".stepOne").css("display", "none");
     }
 })
 
 $("#buttonBack").click(function () {
-    if (selectBuildDom[0].value != "0" && selectGroupDom[0].value != "0" && selectRoomDom[0].value != "0"){
-        $(".stepOne").css("display","inline-block");
-        $(".stepTwo").css("display","none");
+    if (selectBuildDom[0].value != "0" && selectGroupDom[0].value != "0" && selectRoomDom[0].value != "0") {
+        $(".stepOne").css("display", "inline-block");
+        $(".stepTwo").css("display", "none");
     }
 })
 /////////////////////////////////翻页功能//////////////////////////

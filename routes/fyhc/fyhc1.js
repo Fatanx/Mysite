@@ -11,9 +11,15 @@ router.get('/check', function(req, res, next) {
   router.post('/reg',function(req,res,next){
   });
 */
+
+/*
+v0.6 增加了业主名称和电话数据错误提示
+*/
+
+
 let allRoomNo;
 function getAllRoomData() {
-    console.log("info:","fyhc当前版本 v0.5");
+    console.log("info:","fyhc当前版本 v0.6");
     console.log("info:","正在加载 allRoomNo");
     MongoClient.connect('mongodb://111.231.193.45:27015', {
         useNewUrlParser: true,useUnifiedTopology:true
