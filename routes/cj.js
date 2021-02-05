@@ -30,7 +30,6 @@ router.post("/add_name",function(req,res){
 
 });
 
-
 router.get("/cjj",function(req,res){
   let user = req.session.user;
   console.log(namelist);
